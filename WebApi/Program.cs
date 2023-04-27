@@ -1,14 +1,17 @@
 using Microsoft.EntityFrameworkCore;
-using WebApi.Data;
+using WebApi.Contexts;
 var builder = WebApplication.CreateBuilder(args);
-
-// Add ApplicationDbContext and configure the connection string
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+#region Contexts
+
+builder.Services.AddDbContext<DataContext>(options =>
+	options.UseSqlServer(builder.Configuration.GetConnectionString("sql")));
+
+#endregion
 
 var app = builder.Build();
 app.UseSwagger();
