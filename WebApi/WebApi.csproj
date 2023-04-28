@@ -19,7 +19,6 @@
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Helpers\Filters\" />
-    <Folder Include="Helpers\Repositories\BaseRepositories\" />
     <Folder Include="Helpers\Services\" />
     <Folder Include="Models\Entities\" />
     <Folder Include="Models\Interfaces\" />
