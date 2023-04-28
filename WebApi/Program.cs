@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Contexts;
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +10,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("Data")));
-builder.Services.AddDbContext<IdentityDbContext>(options =>
+builder.Services.AddDbContext<IdentityContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("Identity")));
 #endregion
 
