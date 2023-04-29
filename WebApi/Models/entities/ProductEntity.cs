@@ -11,16 +11,17 @@ namespace WebApi.Models.Entities
 
         [Required]
         public string Name { get; set; }
-
+        [Required]
         public string Description { get; set; }
 
         [Required]
         public decimal Price { get; set; }
-
+        [Required]
         public string Color { get; set; }
 
         public string ImageUrl { get; set; }
 
+        [Required]
         public int Stock { get; set; }
 
         [Required]
