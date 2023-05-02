@@ -2,7 +2,7 @@
 
 namespace WebApi.Models.Entities;
 
-    public class FavouritesEntity
+    public class WishlistEntity
     {
 	[Key]
 	public int Id { get; set; }

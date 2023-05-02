@@ -31,7 +31,7 @@ public class CustomerProfileEntity
 
 	[Required]
 	public int FavouritesId { get; set; }
-	public FavouritesEntity Favourites { get; set; } = null!;
+	public WishlistEntity Favourites { get; set; } = null!;
 
 	[Required]
 	public int CartId { get; set; }
