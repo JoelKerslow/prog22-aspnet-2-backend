@@ -145,7 +145,7 @@ namespace WebApi.Migrations
                         column: x => x.ShippingAddressId,
                         principalTable: "Addresses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -168,24 +168,24 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CustomerProfileEntityPromoCodeEntity",
+                name: "CustomerPromoCodes",
                 columns: table => new
                 {
-                    CustomerProfilesId = table.Column<int>(type: "int", nullable: false),
-                    PromoCodesId = table.Column<int>(type: "int", nullable: false)
+                    CustomerProfileId = table.Column<int>(type: "int", nullable: false),
+                    PromoCodeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CustomerProfileEntityPromoCodeEntity", x => new { x.CustomerProfilesId, x.PromoCodesId });
+                    table.PrimaryKey("PK_CustomerPromoCodes", x => new { x.CustomerProfileId, x.PromoCodeId });
                     table.ForeignKey(
-                        name: "FK_CustomerProfileEntityPromoCodeEntity_CustomerProfiles_CustomerProfilesId",
-                        column: x => x.CustomerProfilesId,
+                        name: "FK_CustomerPromoCodes_CustomerProfiles_CustomerProfileId",
+                        column: x => x.CustomerProfileId,
                         principalTable: "CustomerProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CustomerProfileEntityPromoCodeEntity_PromoCodes_PromoCodesId",
-                        column: x => x.PromoCodesId,
+                        name: "FK_CustomerPromoCodes_PromoCodes_PromoCodeId",
+                        column: x => x.PromoCodeId,
                         principalTable: "PromoCodes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -256,7 +256,7 @@ namespace WebApi.Migrations
                     DepartmentId = table.Column<int>(type: "int", nullable: false),
                     TagId = table.Column<int>(type: "int", nullable: false),
                     CampaignId = table.Column<int>(type: "int", nullable: true),
-                    WishlistEntityId = table.Column<int>(type: "int", nullable: true)
+                    WishlistId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -273,8 +273,8 @@ namespace WebApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Products_CustomerWishlists_WishlistEntityId",
-                        column: x => x.WishlistEntityId,
+                        name: "FK_Products_CustomerWishlists_WishlistId",
+                        column: x => x.WishlistId,
                         principalTable: "CustomerWishlists",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -313,48 +313,48 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CartEntityProductEntity",
+                name: "CartProducts",
                 columns: table => new
                 {
-                    CartsId = table.Column<int>(type: "int", nullable: false),
-                    ProductsId = table.Column<int>(type: "int", nullable: false)
+                    CartId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CartEntityProductEntity", x => new { x.CartsId, x.ProductsId });
+                    table.PrimaryKey("PK_CartProducts", x => new { x.CartId, x.ProductId });
                     table.ForeignKey(
-                        name: "FK_CartEntityProductEntity_CustomerCarts_CartsId",
-                        column: x => x.CartsId,
+                        name: "FK_CartProducts_CustomerCarts_CartId",
+                        column: x => x.CartId,
                         principalTable: "CustomerCarts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CartEntityProductEntity_Products_ProductsId",
-                        column: x => x.ProductsId,
+                        name: "FK_CartProducts_Products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderEntityProductEntity",
+                name: "OrderProducts",
                 columns: table => new
                 {
-                    OrdersId = table.Column<int>(type: "int", nullable: false),
-                    ProductsId = table.Column<int>(type: "int", nullable: false)
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderEntityProductEntity", x => new { x.OrdersId, x.ProductsId });
+                    table.PrimaryKey("PK_OrderProducts", x => new { x.OrderId, x.ProductId });
                     table.ForeignKey(
-                        name: "FK_OrderEntityProductEntity_Orders_OrdersId",
-                        column: x => x.OrdersId,
+                        name: "FK_OrderProducts_Orders_OrderId",
+                        column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderEntityProductEntity_Products_ProductsId",
-                        column: x => x.ProductsId,
+                        name: "FK_OrderProducts_Products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -389,9 +389,9 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CartEntityProductEntity_ProductsId",
-                table: "CartEntityProductEntity",
-                column: "ProductsId");
+                name: "IX_CartProducts_ProductId",
+                table: "CartProducts",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CustomerCarts_CustomerId",
@@ -399,9 +399,9 @@ namespace WebApi.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomerProfileEntityPromoCodeEntity_PromoCodesId",
-                table: "CustomerProfileEntityPromoCodeEntity",
-                column: "PromoCodesId");
+                name: "IX_CustomerPromoCodes_PromoCodeId",
+                table: "CustomerPromoCodes",
+                column: "PromoCodeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CustomerProfiles_AddressId",
@@ -419,9 +419,9 @@ namespace WebApi.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderEntityProductEntity_ProductsId",
-                table: "OrderEntityProductEntity",
-                column: "ProductsId");
+                name: "IX_OrderProducts_ProductId",
+                table: "OrderProducts",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderReviews_OrderId",
@@ -469,22 +469,22 @@ namespace WebApi.Migrations
                 column: "TagId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_WishlistEntityId",
+                name: "IX_Products_WishlistId",
                 table: "Products",
-                column: "WishlistEntityId");
+                column: "WishlistId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CartEntityProductEntity");
+                name: "CartProducts");
 
             migrationBuilder.DropTable(
-                name: "CustomerProfileEntityPromoCodeEntity");
+                name: "CustomerPromoCodes");
 
             migrationBuilder.DropTable(
-                name: "OrderEntityProductEntity");
+                name: "OrderProducts");
 
             migrationBuilder.DropTable(
                 name: "OrderReviews");
