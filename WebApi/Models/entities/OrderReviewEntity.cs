@@ -8,7 +8,7 @@ namespace WebApi.Models.Entities
         [Key]
         public int Id { get; set; }
 
-        public string Comment { get; set; }
+        public string Comment { get; set; }=null!; 
 
         [Required]
         public int Rating { get; set; }
@@ -17,6 +17,6 @@ namespace WebApi.Models.Entities
         public int OrderId { get; set; }
 
         [ForeignKey("OrderId")]
-        public OrderEntity Order { get; set; }
+        public OrderEntity Order { get; set; }=null!; 
     }
 }

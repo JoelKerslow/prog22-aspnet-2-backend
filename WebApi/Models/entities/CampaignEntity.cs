@@ -15,9 +15,9 @@ namespace WebApi.Models.Entities
         public DateTime EndDate { get; set; }
 
         [Required]
-        public string CampaignName { get; set; }
-        [ForeignKey("CampaignProductId")]
-        public CampaignProductEntity CampingProduct { get; set; }
+        public string CampaignName { get; set; } =null!; 
+        [ForeignKey("CampaignProductId")] 
+        public CampaignProductEntity CampingProduct { get; set; }=null!; 
 
     }
 }

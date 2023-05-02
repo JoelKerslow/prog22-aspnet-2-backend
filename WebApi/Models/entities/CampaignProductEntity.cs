@@ -18,7 +18,7 @@ namespace WebApi.Models.Entities
         public int ProductId { get; set; }
 
         [ForeignKey("ProductId")]
-        public ProductEntity Product { get; set; }
+        public ProductEntity Product { get; set; } =null!; 
 
         
     }

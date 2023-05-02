@@ -12,12 +12,12 @@ namespace WebApi.Models.Entities
         public int ProductId { get; set; }
 
         [ForeignKey("ProductId")]
-        public ProductEntity Product { get; set; }
+        public ProductEntity Product { get; set; }=null!; 
 
         [Required]
         public int CustomerId { get; set; }
 
         [ForeignKey("CustomerId")]
-        public CustomerProfileEntity Customer { get; set; }
+        public CustomerProfileEntity Customer { get; set; }=null!; 
     }
 }

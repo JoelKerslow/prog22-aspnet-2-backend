@@ -10,7 +10,7 @@ namespace WebApi.Models.Entities
         public int Id { get; set; }
 
         [Required]
-        public string Description { get; set; }
+        public string Description { get; set; }=null!;
 
         [Required]
         public decimal Discount { get; set; }
@@ -22,7 +22,7 @@ namespace WebApi.Models.Entities
         public DateTime EndDate { get; set; }
 
         [Required]
-        public string Code { get; set; }
+        public string Code { get; set; }=null!;
 
         [Required]
         public bool IsReusable { get; set; }
@@ -31,6 +31,6 @@ namespace WebApi.Models.Entities
         public int PromoCategoryId { get; set; }
 
         [ForeignKey("PromoCategoryId")]
-        public PromoCategoryEntity PromoCategory { get; set; }
+        public PromoCategoryEntity PromoCategory { get; set; }=null!;
     }
 }

@@ -10,16 +10,16 @@ namespace WebApi.Models.Entities
         public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string Name { get; set; }=null!;
         [Required]
-        public string Description { get; set; }
+        public string Description { get; set; }=null!;
 
         [Required]
         public decimal Price { get; set; }
         [Required]
-        public string Color { get; set; }
+        public string Color { get; set; }=null!;
 
-        public string ImageUrl { get; set; }
+        public string ImageUrl { get; set; }=null!;
 
         [Required]
         public int Stock { get; set; }
@@ -28,19 +28,19 @@ namespace WebApi.Models.Entities
         public int CategoryId { get; set; }
 
         [ForeignKey("CategoryId")]
-        public CategoryEntity Category { get; set; }
+        public CategoryEntity Category { get; set; }=null!;
 
         [Required]
         public int DepartmentId { get; set; }
 
         [ForeignKey("DepartmentId")]
-        public DepartmentEntity Department { get; set; }
+        public DepartmentEntity Department { get; set; }=null!;
 
         [Required]
         public int TagId { get; set; }
 
         [ForeignKey("TagId")]
-        public TagEntity Tag { get; set; }
+        public TagEntity Tag { get; set; }=null!;
 
        
 

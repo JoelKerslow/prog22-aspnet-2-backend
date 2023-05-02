@@ -7,13 +7,13 @@ namespace WebApi.Models.Entities
         [Key]
         public int Id { get; set; }
         [Required]
-        public string Addressline1 { get; set; }
-        public string Addressline2 { get; set; }
+        public string Addressline1 { get; set; }=null!; 
+        public string Addressline2 { get; set; }=null!; 
         [Required]
-        public int PostalCode { get; set; }
+        public int PostalCode { get; set; } 
         [Required]
-        public string City { get; set; }
+        public string City { get; set; }=null!; 
         [Required]
-        public string Country { get; set; }
+        public string Country { get; set; }=null!;
     }
 }
