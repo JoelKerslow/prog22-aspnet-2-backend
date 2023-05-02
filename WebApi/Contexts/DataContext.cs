@@ -7,7 +7,7 @@ namespace WebApi.Contexts
 	{
 		public DataContext(DbContextOptions<DataContext> options) : base(options)
 		{
-		}
+        }
         public DbSet<ProductEntity> Products { get; set; }
         public DbSet<CategoryEntity> Categories { get; set; }
         public DbSet<DepartmentEntity> Departments { get; set; }
@@ -17,11 +17,12 @@ namespace WebApi.Contexts
         public DbSet<CampaignEntity> Campaigns { get; set; }
         public DbSet<OrderReviewEntity> OrderReviews { get; set; }
         public DbSet<CustomerProfileEntity> CustomerProfiles { get; set; }
-        public DbSet<CartEntity> Carts { get; set; }
         public DbSet<ProductReviewEntity> ProductReviews { get; set; }
-        public DbSet<WishlistEntity> Wishlists { get; set; }
         public DbSet<AddressEntity> Addresses { get; set; }
         public DbSet<ShowcaseEntity> Showcases { get; set; }
+        public DbSet<CartEntity> CustomerCarts { get; set; }
+        public DbSet<WishlistEntity> CustomerWishlists { get; set; }
+
 
     }
 }

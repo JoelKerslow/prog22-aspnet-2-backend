@@ -44,8 +44,7 @@ namespace WebApi.Models.Entities
 
         public IEnumerable<ProductReviewEntity> Reviews { get; set; } = new List<ProductReviewEntity>();
         public IEnumerable<CartEntity> Carts { get; set; } = new List<CartEntity>();
-        public IEnumerable<WishlistEntity> Wishlists { get; set; } = new List<WishlistEntity>();
-        public IEnumerable<OrderEntity> Orders { get; set; } = new List<OrderEntity>();
+		public IEnumerable<OrderEntity> Orders { get; set; } = new List<OrderEntity>();
 
     }
 }

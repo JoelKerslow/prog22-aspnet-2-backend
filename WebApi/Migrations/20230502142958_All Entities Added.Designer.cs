@@ -12,7 +12,7 @@ using WebApi.Contexts;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230502141947_All Entities Added")]
+    [Migration("20230502142958_All Entities Added")]
     partial class AllEntitiesAdded
     {
         /// <inheritdoc />

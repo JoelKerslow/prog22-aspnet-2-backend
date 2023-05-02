@@ -27,15 +27,6 @@ public class CustomerProfileEntity
 	public int ShippingAddressId { get; set; }
 	public AddressEntity ShippingAddress { get; set; } = null!;
 
-	[Required]
-	public int WishlistId { get; set; }
-	public WishlistEntity Wishlist { get; set; } = null!;
-
-	[Required]
-	public int CartId { get; set; }
-	public CartEntity Cart { get; set; } = null!;
-
-
 	public IEnumerable<PromoCodeEntity> PromoCodes { get; set; } = new List<PromoCodeEntity>();
 
 

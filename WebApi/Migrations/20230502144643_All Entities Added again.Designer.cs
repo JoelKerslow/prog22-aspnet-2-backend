@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Contexts;
 
@@ -11,9 +12,11 @@ using WebApi.Contexts;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230502144643_All Entities Added again")]
+    partial class AllEntitiesAddedagain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,6 +68,21 @@ namespace WebApi.Migrations
                     b.HasIndex("ProductsId");
 
                     b.ToTable("OrderEntityProductEntity");
+                });
+
+            modelBuilder.Entity("ProductEntityWishlistEntity", b =>
+                {
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WishlistsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductsId", "WishlistsId");
+
+                    b.HasIndex("WishlistsId");
+
+                    b.ToTable("ProductEntityWishlistEntity");
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.AddressEntity", b =>
@@ -132,14 +150,9 @@ namespace WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("CustomerCarts");
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.CategoryEntity", b =>
@@ -170,6 +183,9 @@ namespace WebApi.Migrations
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -189,11 +205,18 @@ namespace WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("WishlistId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
+                    b.HasIndex("CartId");
+
                     b.HasIndex("ShippingAddressId");
+
+                    b.HasIndex("WishlistId");
 
                     b.ToTable("CustomerProfiles");
                 });
@@ -319,9 +342,6 @@ namespace WebApi.Migrations
                     b.Property<int>("TagId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("WishlistEntityId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CampaignId");
@@ -331,8 +351,6 @@ namespace WebApi.Migrations
                     b.HasIndex("DepartmentId");
 
                     b.HasIndex("TagId");
-
-                    b.HasIndex("WishlistEntityId");
 
                     b.ToTable("Products");
                 });
@@ -455,14 +473,9 @@ namespace WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("CustomerWishlists");
+                    b.ToTable("Wishlists");
                 });
 
             modelBuilder.Entity("CartEntityProductEntity", b =>
@@ -510,15 +523,19 @@ namespace WebApi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebApi.Models.Entities.CartEntity", b =>
+            modelBuilder.Entity("ProductEntityWishlistEntity", b =>
                 {
-                    b.HasOne("WebApi.Models.Entities.CustomerProfileEntity", "Customer")
+                    b.HasOne("WebApi.Models.Entities.ProductEntity", null)
                         .WithMany()
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.HasOne("WebApi.Models.Entities.WishlistEntity", null)
+                        .WithMany()
+                        .HasForeignKey("WishlistsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.CustomerProfileEntity", b =>
@@ -529,15 +546,31 @@ namespace WebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("WebApi.Models.Entities.CartEntity", "Cart")
+                        .WithMany()
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("WebApi.Models.Entities.AddressEntity", "ShippingAddress")
                         .WithMany()
                         .HasForeignKey("ShippingAddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("WebApi.Models.Entities.WishlistEntity", "Wishlist")
+                        .WithMany()
+                        .HasForeignKey("WishlistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Address");
 
+                    b.Navigation("Cart");
+
                     b.Navigation("ShippingAddress");
+
+                    b.Navigation("Wishlist");
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.OrderEntity", b =>
@@ -592,10 +625,6 @@ namespace WebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebApi.Models.Entities.WishlistEntity", null)
-                        .WithMany("Products")
-                        .HasForeignKey("WishlistEntityId");
-
                     b.Navigation("Campaign");
 
                     b.Navigation("Category");
@@ -624,17 +653,6 @@ namespace WebApi.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("WebApi.Models.Entities.WishlistEntity", b =>
-                {
-                    b.HasOne("WebApi.Models.Entities.CustomerProfileEntity", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
             modelBuilder.Entity("WebApi.Models.Entities.CampaignEntity", b =>
                 {
                     b.Navigation("CampaignProducts");
@@ -643,11 +661,6 @@ namespace WebApi.Migrations
             modelBuilder.Entity("WebApi.Models.Entities.ProductEntity", b =>
                 {
                     b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("WebApi.Models.Entities.WishlistEntity", b =>
-                {
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

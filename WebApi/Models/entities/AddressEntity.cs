@@ -16,8 +16,8 @@ public class AddressEntity
     public int PostalCode { get; set; } 
 
     [Required]
-    public string City { get; set; }=null!; 
+    public string City { get; set; } = null!; 
 
     [Required]
-    public string Country { get; set; }=null!;
+    public string Country { get; set; } = null!;
 }
