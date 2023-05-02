@@ -1,33 +1,32 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.Models.Entities
+namespace WebApi.Models.Entities;
+
+public class OrderEntity
 {
-    public class OrderEntity
-    {
 
-        [Key]
-        public int Id { get; set; }
+    [Key]
+    public int Id { get; set; }
 
-        [Required]
-        public int CustomerId { get; set; }
+    [Required]
+    public int CustomerId { get; set; }
+    public CustomerProfileEntity Customer { get; set; } = null!; 
 
-        [ForeignKey("CustomerId")]
-        public CustomerProfileEntity Customer { get; set; }=null!; 
+    [Required]
+    public DateTime OrderDate { get; set; }
 
-        [Required]
-        public DateTime OrderDate { get; set; }
+    [Required]
+    public string Status { get; set; } = null!;
 
-        public string Status { get; set; }=null!;
+    [Required]
+    public decimal TotalAmount { get; set; }
 
-        [Required]
-        public decimal TotalAmount { get; set; }
+    public string? CustomerComment { get; set; }
 
-        public string Comments { get; set; }=null!;
+    public int? PromoCodeId { get; set; }
+    public PromoCodeEntity? PromoCode { get; set; }
 
-        [ForeignKey("ProductOrderDetailId")]
-        public ProductOrderDetailEntity ProductOrderDetail { get; set; }=null!; 
 
-       
-    }
+    public IEnumerable<ProductEntity> Products { get; set; } = new List<ProductEntity>();
+
 }

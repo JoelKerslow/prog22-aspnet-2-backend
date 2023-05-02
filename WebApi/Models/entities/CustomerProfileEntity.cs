@@ -2,42 +2,41 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.Models.Entities
+namespace WebApi.Models.Entities;
+
+public class CustomerProfileEntity
 {
-    public class CustomerProfileEntity
-    {
-        [Key]
-        public int Id { get; set; }
+	[Key]
+	public int Id { get; set; }
 
-        [Required]
-        public string FirstName { get; set; }=null!; 
+	[Required]
+	public string FirstName { get; set; } = null!;
 
-        [Required]
-        public string LastName { get; set; }=null!; 
+	[Required]
+	public string LastName { get; set; } = null!;
 
-        [Required]
-        public int AddressId { get; set; }
+	[Required]
+	public int AddressId { get; set; }
+	public AddressEntity Address { get; set; } = null!;
 
-        [ForeignKey("AddressId")]
-        public AddressEntity Address { get; set; }=null!; 
+	[Required]
+	public int ShippingAddressId { get; set; }
+	public AddressEntity ShippingAddress { get; set; } = null!;
 
-        [Required]
-        public int ShippingAddressId { get; set; }
+	[Required]
+	public int UserId { get; set; }
+	public IdentityUser User { get; set; } = null!;
 
-        [ForeignKey("ShippingAddressId")]
-        public AddressEntity ShippingAddress { get; set; }=null!; 
+	[Required]
+	public int FavouritesId { get; set; }
+	public FavouritesEntity Favourites { get; set; } = null!;
 
-        [Required]
-        public int IdentityUserId { get; set; }
+	[Required]
+	public int CartId { get; set; }
+	public CartEntity Cart { get; set; } = null!;
 
-        [ForeignKey("IdentityUserId")]
-        public IdentityUser IdentityUser { get; set; }=null!; 
 
-        [Required]
-        public int FavouritesId { get; set; }
+	public IEnumerable<PromoCodeEntity> PromoCodes { get; set; } = new List<PromoCodeEntity>();
 
-        [ForeignKey("FavouritesId")]
-        public FavouritesEntity Favourites { get; set; }=null!; 
 
-    }
 }

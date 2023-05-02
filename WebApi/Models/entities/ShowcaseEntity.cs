@@ -8,10 +8,12 @@ namespace WebApi.Models.Entities
         public int Id { get; set; }
 
         [Required]
-        public string Title { get; set; }=null!;
+        public string Title { get; set; } = null!;
 
-        public string Offer { get; set; }=null!;
+        [Required]
+        public string Offer { get; set; } = null!;
 
-        public string ImgUrl { get; set; }=null!;
+        [Required]  
+        public string ImgUrl { get; set; } = null!;
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Models.Entities
 {
@@ -8,20 +7,17 @@ namespace WebApi.Models.Entities
         [Key]
         public int Id { get; set; }
 
+        [Required]
         public int Rating { get; set; }
 
-        public string Comment { get; set; }=null!;
+        public string? Comment { get; set; }
 
         [Required]
         public int CustomerId { get; set; }
-
-        [ForeignKey("CustomerId")]
-        public CustomerProfileEntity Customer { get; set; }=null!;
+        public CustomerProfileEntity Customer { get; set; } = null!;
 
         [Required]
         public int ProductId { get; set; }
-
-        [ForeignKey("ProductId")]
         public ProductEntity Product { get; set; }=null!;
     }
 }

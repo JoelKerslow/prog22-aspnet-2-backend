@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Models.Entities
@@ -10,9 +9,11 @@ namespace WebApi.Models.Entities
         public int Id { get; set; }
 
         [Required]
-        public string Description { get; set; }=null!;
+        public string Description { get; set; } = null!;
 
-        [Required]
+		public string? Brand { get; set; }
+
+		[Required]
         public decimal Discount { get; set; }
 
         [Required]
@@ -22,15 +23,12 @@ namespace WebApi.Models.Entities
         public DateTime EndDate { get; set; }
 
         [Required]
-        public string Code { get; set; }=null!;
+        public string Code { get; set; } = null!;
 
         [Required]
         public bool IsReusable { get; set; }
 
         [Required]
-        public int PromoCategoryId { get; set; }
-
-        [ForeignKey("PromoCategoryId")]
-        public PromoCategoryEntity PromoCategory { get; set; }=null!;
+        public bool IsValid { get; set; }
     }
 }

@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.Models.Entities
-{
+namespace WebApi.Models.Entities;
+
     public class FavouritesEntity
     {
-        public int Id { get; set; }
+	[Key]
+	public int Id { get; set; }
 
-        [ForeignKey("ProductId")]
-        public ProductEntity Product { get; set; }=null!; 
-    }
+	public IEnumerable<ProductEntity> Products { get; set; } = new List<ProductEntity>();
 }

@@ -14,7 +14,7 @@ namespace WebApi.Contexts
         public DbSet<PromoCategoryEntity> PromoCategories { get; set; }
         public DbSet<PromoCodeEntity> PromoCodes { get; set; }
         public DbSet<TagEntity> Tags { get; set; }
-        public DbSet<ProductOrderDetailEntity> ProductOrderDetails { get; set; }
+        public DbSet<OrderDetailsEntity> ProductOrderDetails { get; set; }
         public DbSet<OrderEntity> Orders { get; set; }
         public DbSet<CampaignProductEntity> CampaignProducts { get; set; }
         public DbSet<CampaignEntity> Campaigns { get; set; }
