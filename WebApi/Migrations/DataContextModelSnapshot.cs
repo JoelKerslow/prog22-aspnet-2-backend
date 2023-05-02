@@ -22,6 +22,66 @@ namespace WebApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("CartEntityProductEntity", b =>
+                {
+                    b.Property<int>("CartsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartsId", "ProductsId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("CartEntityProductEntity");
+                });
+
+            modelBuilder.Entity("CustomerProfileEntityPromoCodeEntity", b =>
+                {
+                    b.Property<int>("CustomerProfilesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PromoCodesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CustomerProfilesId", "PromoCodesId");
+
+                    b.HasIndex("PromoCodesId");
+
+                    b.ToTable("CustomerProfileEntityPromoCodeEntity");
+                });
+
+            modelBuilder.Entity("OrderEntityProductEntity", b =>
+                {
+                    b.Property<int>("OrdersId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrdersId", "ProductsId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("OrderEntityProductEntity");
+                });
+
+            modelBuilder.Entity("ProductEntityWishlistEntity", b =>
+                {
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WishlistsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductsId", "WishlistsId");
+
+                    b.HasIndex("WishlistsId");
+
+                    b.ToTable("ProductEntityWishlistEntity");
+                });
+
             modelBuilder.Entity("WebApi.Models.Entities.AddressEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -127,9 +187,6 @@ namespace WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FavouritesId")
-                        .HasColumnType("int");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -145,15 +202,18 @@ namespace WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("WishlistId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
                     b.HasIndex("CartId");
 
-                    b.HasIndex("FavouritesId");
-
                     b.HasIndex("ShippingAddressId");
+
+                    b.HasIndex("WishlistId");
 
                     b.ToTable("CustomerProfiles");
                 });
@@ -250,9 +310,6 @@ namespace WebApi.Migrations
                     b.Property<int?>("CampaignId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CartEntityId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -273,9 +330,6 @@ namespace WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrderEntityId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -285,24 +339,15 @@ namespace WebApi.Migrations
                     b.Property<int>("TagId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("WishlistEntityId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CampaignId");
-
-                    b.HasIndex("CartEntityId");
 
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("DepartmentId");
 
-                    b.HasIndex("OrderEntityId");
-
                     b.HasIndex("TagId");
-
-                    b.HasIndex("WishlistEntityId");
 
                     b.ToTable("Products");
                 });
@@ -351,15 +396,12 @@ namespace WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CustomerProfileEntityId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Discount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("Discount")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -374,8 +416,6 @@ namespace WebApi.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CustomerProfileEntityId");
 
                     b.ToTable("PromoCodes");
                 });
@@ -435,6 +475,66 @@ namespace WebApi.Migrations
                     b.ToTable("Wishlists");
                 });
 
+            modelBuilder.Entity("CartEntityProductEntity", b =>
+                {
+                    b.HasOne("WebApi.Models.Entities.CartEntity", null)
+                        .WithMany()
+                        .HasForeignKey("CartsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.Models.Entities.ProductEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CustomerProfileEntityPromoCodeEntity", b =>
+                {
+                    b.HasOne("WebApi.Models.Entities.CustomerProfileEntity", null)
+                        .WithMany()
+                        .HasForeignKey("CustomerProfilesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.Models.Entities.PromoCodeEntity", null)
+                        .WithMany()
+                        .HasForeignKey("PromoCodesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("OrderEntityProductEntity", b =>
+                {
+                    b.HasOne("WebApi.Models.Entities.OrderEntity", null)
+                        .WithMany()
+                        .HasForeignKey("OrdersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.Models.Entities.ProductEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ProductEntityWishlistEntity", b =>
+                {
+                    b.HasOne("WebApi.Models.Entities.ProductEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.Models.Entities.WishlistEntity", null)
+                        .WithMany()
+                        .HasForeignKey("WishlistsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("WebApi.Models.Entities.CustomerProfileEntity", b =>
                 {
                     b.HasOne("WebApi.Models.Entities.AddressEntity", "Address")
@@ -449,15 +549,15 @@ namespace WebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebApi.Models.Entities.WishlistEntity", "Favourites")
-                        .WithMany()
-                        .HasForeignKey("FavouritesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("WebApi.Models.Entities.AddressEntity", "ShippingAddress")
                         .WithMany()
                         .HasForeignKey("ShippingAddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.Models.Entities.WishlistEntity", "Wishlist")
+                        .WithMany()
+                        .HasForeignKey("WishlistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -465,9 +565,9 @@ namespace WebApi.Migrations
 
                     b.Navigation("Cart");
 
-                    b.Navigation("Favourites");
-
                     b.Navigation("ShippingAddress");
+
+                    b.Navigation("Wishlist");
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.OrderEntity", b =>
@@ -504,10 +604,6 @@ namespace WebApi.Migrations
                         .WithMany("CampaignProducts")
                         .HasForeignKey("CampaignId");
 
-                    b.HasOne("WebApi.Models.Entities.CartEntity", null)
-                        .WithMany("Products")
-                        .HasForeignKey("CartEntityId");
-
                     b.HasOne("WebApi.Models.Entities.CategoryEntity", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
@@ -520,19 +616,11 @@ namespace WebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebApi.Models.Entities.OrderEntity", null)
-                        .WithMany("Products")
-                        .HasForeignKey("OrderEntityId");
-
                     b.HasOne("WebApi.Models.Entities.TagEntity", "Tag")
                         .WithMany()
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("WebApi.Models.Entities.WishlistEntity", null)
-                        .WithMany("Products")
-                        .HasForeignKey("WishlistEntityId");
 
                     b.Navigation("Campaign");
 
@@ -562,41 +650,14 @@ namespace WebApi.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("WebApi.Models.Entities.PromoCodeEntity", b =>
-                {
-                    b.HasOne("WebApi.Models.Entities.CustomerProfileEntity", null)
-                        .WithMany("PromoCodes")
-                        .HasForeignKey("CustomerProfileEntityId");
-                });
-
             modelBuilder.Entity("WebApi.Models.Entities.CampaignEntity", b =>
                 {
                     b.Navigation("CampaignProducts");
                 });
 
-            modelBuilder.Entity("WebApi.Models.Entities.CartEntity", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("WebApi.Models.Entities.CustomerProfileEntity", b =>
-                {
-                    b.Navigation("PromoCodes");
-                });
-
-            modelBuilder.Entity("WebApi.Models.Entities.OrderEntity", b =>
-                {
-                    b.Navigation("Products");
-                });
-
             modelBuilder.Entity("WebApi.Models.Entities.ProductEntity", b =>
                 {
                     b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("WebApi.Models.Entities.WishlistEntity", b =>
-                {
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

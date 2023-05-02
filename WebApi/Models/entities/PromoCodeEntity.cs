@@ -14,7 +14,7 @@ namespace WebApi.Models.Entities
 		public string? Brand { get; set; }
 
 		[Required]
-        public decimal Discount { get; set; }
+        public int Discount { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }
@@ -30,5 +30,8 @@ namespace WebApi.Models.Entities
 
         [Required]
         public bool IsValid { get; set; }
+
+
+        public IEnumerable<CustomerProfileEntity> CustomerProfiles { get; set; } = new List<CustomerProfileEntity>();
     }
 }

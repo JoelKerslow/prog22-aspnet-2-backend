@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Models.Entities;
 
@@ -30,8 +28,8 @@ public class CustomerProfileEntity
 	public AddressEntity ShippingAddress { get; set; } = null!;
 
 	[Required]
-	public int FavouritesId { get; set; }
-	public WishlistEntity Favourites { get; set; } = null!;
+	public int WishlistId { get; set; }
+	public WishlistEntity Wishlist { get; set; } = null!;
 
 	[Required]
 	public int CartId { get; set; }

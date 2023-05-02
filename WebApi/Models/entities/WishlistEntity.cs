@@ -2,8 +2,8 @@
 
 namespace WebApi.Models.Entities;
 
-    public class WishlistEntity
-    {
+public class WishlistEntity
+{
 	[Key]
 	public int Id { get; set; }
 
