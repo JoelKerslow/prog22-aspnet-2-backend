@@ -15,7 +15,7 @@ namespace WebApi.Controllers
 			_productService = productService;
 		}
 
-		[HttpGet("GetAll")]
+		[HttpGet("All")]
 		public async Task<IActionResult> GetAll()
 		{
 			return Ok(await _productService.GetAllAsync());
@@ -33,5 +33,30 @@ namespace WebApi.Controllers
 
 			return BadRequest();
 		}
+
+		[HttpGet("Category")]
+		public async Task<IActionResult> GetByCategory(int categoryId)
+		{
+			return Ok(await _productService.GetByCategoryAsync(categoryId));
+		}
+
+		[HttpGet("Department")]
+		public async Task<IActionResult> GetByDepartment(int departmentId)
+		{
+			return Ok(await _productService.GetByDepartmentAsync(departmentId));
+		}
+
+		[HttpGet("Category/Department")]
+		public async Task<IActionResult> GetByCategoryAndDepartment(int categoryId, int departmentId)
+		{
+			return Ok(await _productService.GetByCategoryAndDepartmentAsync(categoryId, departmentId));
+		}
+
+		[HttpGet("Tag")]
+		public async Task<IActionResult> GetByTag(int tagId)
+		{
+			return Ok(await _productService.GetByTagAsync(tagId));
+		}
+
 	}
 }
