@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WebApi.Models.Dtos;
 
 namespace WebApi.Models.Entities
 {
@@ -46,6 +47,22 @@ namespace WebApi.Models.Entities
 		public ICollection<OrderEntity> Orders { get; set; } = new HashSet<OrderEntity>();
 		public ICollection<CartEntity> CustomerCarts { get; set; } = new HashSet<CartEntity>();
 		public ICollection<WishlistEntity> CustomerWishlists { get; set; } = new HashSet<WishlistEntity>();
+
+
+        public static implicit operator ProductDto(ProductEntity entity)
+        {
+            return new ProductDto
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Description = entity.Description,
+                Brand = entity.Brand,
+                Price = entity.Price,
+                Color = entity.Color,
+                ImageUrl = entity.ImageUrl,
+                Stock = entity.Stock,
+            };
+        }
 
     }
 }
