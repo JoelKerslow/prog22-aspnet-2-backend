@@ -33,6 +33,7 @@ builder.Services.AddScoped<ProductService>();
 #endregion
 
 var app = builder.Build();
+app.UseCors(x => x.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
