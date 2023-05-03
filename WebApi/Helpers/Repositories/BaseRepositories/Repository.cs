@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using WebApi.Contexts;
 
 namespace WebApi.Helpers.Repositories.BaseRepositories
 {
-	public abstract class Repository<TEntity, TContext> where TEntity : class where TContext : DbContext
+	public abstract class Repository<TEntity> where TEntity : class
 	{
-		TContext _context;
+		DataContext _context;
 
-		public Repository(TContext context)
+		public Repository(DataContext context)
 		{
 			_context = context;
 		}
