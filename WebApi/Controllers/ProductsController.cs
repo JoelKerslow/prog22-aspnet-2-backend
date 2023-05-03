@@ -26,7 +26,9 @@ namespace WebApi.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				var product = await _productService.CreateAsync(schema);
 
+				return Created("", product);
 			}
 
 			return BadRequest();
