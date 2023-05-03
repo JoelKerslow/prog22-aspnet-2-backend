@@ -32,6 +32,6 @@ namespace WebApi.Models.Entities
         public bool IsValid { get; set; }
 
 
-        public IEnumerable<CustomerProfileEntity> CustomerProfiles { get; set; } = new List<CustomerProfileEntity>();
+        public ICollection<CustomerProfileEntity> CustomerProfiles { get; set; } = new HashSet<CustomerProfileEntity>();
     }
 }

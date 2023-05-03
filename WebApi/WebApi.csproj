@@ -29,6 +29,7 @@
     <Folder Include="Models\Interfaces\" />
     <Folder Include="Models\Dtos\" />
     <Folder Include="Models\Identity\" />
+    <Folder Include="Models\Schemas\" />
   </ItemGroup>
 
 </Project>

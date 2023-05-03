@@ -42,10 +42,10 @@ namespace WebApi.Models.Entities
         public CampaignEntity? Campaign { get; set; }
 
 
-        public IEnumerable<ProductReviewEntity> Reviews { get; set; } = new List<ProductReviewEntity>();
-		public IEnumerable<OrderEntity> Orders { get; set; } = new List<OrderEntity>();
-		public IEnumerable<CartEntity> CustomerCarts { get; set; } = new List<CartEntity>();
-		public IEnumerable<WishlistEntity> CustomerWishlists { get; set; } = new List<WishlistEntity>();
+        public ICollection<ProductReviewEntity> Reviews { get; set; } = new HashSet<ProductReviewEntity>();
+		public ICollection<OrderEntity> Orders { get; set; } = new HashSet<OrderEntity>();
+		public ICollection<CartEntity> CustomerCarts { get; set; } = new HashSet<CartEntity>();
+		public ICollection<WishlistEntity> CustomerWishlists { get; set; } = new HashSet<WishlistEntity>();
 
     }
 }

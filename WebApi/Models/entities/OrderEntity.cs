@@ -27,6 +27,6 @@ public class OrderEntity
     public PromoCodeEntity? PromoCode { get; set; }
 
 
-    public IEnumerable<ProductEntity> Products { get; set; } = new List<ProductEntity>();
+    public ICollection<ProductEntity> Products { get; set; } = new HashSet<ProductEntity>();
 
 }

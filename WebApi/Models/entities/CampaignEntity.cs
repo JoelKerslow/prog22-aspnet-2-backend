@@ -20,6 +20,6 @@ public class CampaignEntity
     public int DiscountPercent { get; set; }
 
 
-    public IEnumerable<ProductEntity> CampaignProducts { get; set; } = new List<ProductEntity>();
+    public ICollection<ProductEntity> CampaignProducts { get; set; } = new HashSet<ProductEntity>();
 
 }

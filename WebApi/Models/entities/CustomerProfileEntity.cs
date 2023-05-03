@@ -27,7 +27,7 @@ public class CustomerProfileEntity
 	public int ShippingAddressId { get; set; }
 	public AddressEntity ShippingAddress { get; set; } = null!;
 
-	public IEnumerable<PromoCodeEntity> PromoCodes { get; set; } = new List<PromoCodeEntity>();
+	public ICollection<PromoCodeEntity> PromoCodes { get; set; } = new HashSet<PromoCodeEntity>();
 
 
 }
