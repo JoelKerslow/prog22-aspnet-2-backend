@@ -24,6 +24,11 @@ public class ProductService
 		return ConvertEntities(await _productRepo.GetAllAsync());	
 	}
 
+	public async Task<IEnumerable<ProductDto>> SearchAsync(string searchVal)
+	{
+		return ConvertEntities(await _productRepo.GetAllAsync(x => x.Name.ToUpper().Contains(searchVal.ToUpper())));
+	}
+
 	public async Task<IEnumerable<ProductDto>> GetByCategoryAsync(int categoryId)
 	{
 		return ConvertEntities(await _productRepo.GetAllAsync(x => x.CategoryId == categoryId));
