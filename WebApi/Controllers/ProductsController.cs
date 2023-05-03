@@ -15,13 +15,13 @@ namespace WebApi.Controllers
 			_productService = productService;
 		}
 
-		[HttpGet]
+		[HttpGet("GetAll")]
 		public async Task<IActionResult> GetAll()
 		{
 			return Ok(await _productService.GetAllAsync());
 		}
 
-		[HttpPost]
+		[HttpPost("Create")]
 		public async Task<IActionResult> Create(ProductSchema schema)
 		{
 			if (ModelState.IsValid)

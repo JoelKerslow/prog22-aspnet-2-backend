@@ -25,13 +25,13 @@ public class ProductSchema
 	public int Stock { get; set; }
 
 	[Required]
-	public string Category { get; set; } = null!;
+	public int CategoryId { get; set; }
 
 	[Required]
-	public string Department { get; set; } = null!;
+	public int DepartmentId { get; set; }
 
 	[Required]
-	public string Tag { get; set; } = null!;
+	public int TagId { get; set; }
 
 
 	public static implicit operator ProductEntity(ProductSchema schema)
@@ -45,6 +45,9 @@ public class ProductSchema
 			Color = schema.Color,
 			ImageUrl = schema.ImageUrl,
 			Stock = schema.Stock,
+			CategoryId = schema.CategoryId,
+			DepartmentId = schema.DepartmentId,
+			TagId = schema.TagId,
 		};
 	}
 }

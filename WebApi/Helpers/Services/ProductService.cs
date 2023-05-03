@@ -41,11 +41,6 @@ public class ProductService
 
 	public async Task<ProductEntity> CreateAsync(ProductSchema schema)
 	{
-		ProductEntity entity = schema;
-		entity.Category = await _categoryRepo.GetAsync(x => x.CategoryName == schema.Category);
-		entity.Department = await _departmentRepo.GetAsync(x => x.Name == schema.Department);
-		entity.Tag = await _tagRepo.GetAsync(x => x.Name == schema.Tag);
-
-		return await _productRepo.AddAsync(entity);
+		return await _productRepo.AddAsync(schema);
 	}
 }
