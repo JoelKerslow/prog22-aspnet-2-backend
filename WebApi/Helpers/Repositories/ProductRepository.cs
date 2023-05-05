@@ -24,4 +24,14 @@ public class ProductRepository : Repository<ProductEntity>
 	{
 		return await _context.Products.Include("Tag").Include("Category").Include("Department").Include("Reviews").Where(predicate).ToListAsync();
 	}
+
+	public override async Task<ProductEntity> GetAsync(Expression<Func<ProductEntity, bool>> predicate)
+	{
+		var entity = await _context.Products.Include("Tag").Include("Category").Include("Department").Include("Reviews").FirstOrDefaultAsync(predicate);
+
+		if (entity != null)
+			return entity;
+
+		return null!;
+	}
 }
