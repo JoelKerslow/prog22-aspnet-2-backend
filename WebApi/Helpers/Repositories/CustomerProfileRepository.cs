@@ -4,9 +4,9 @@ using WebApi.Models.Entities;
 
 namespace WebApi.Helpers.Repositories;
 
-public class DepartmentRepository : Repository<DepartmentEntity>
+public class CustomerProfileRepository : Repository<CustomerProfileEntity>
 {
-    public DepartmentRepository(DataContext context) : base(context)
-    {
-    }
+	public CustomerProfileRepository(DataContext context) : base(context)
+	{
+	}
 }

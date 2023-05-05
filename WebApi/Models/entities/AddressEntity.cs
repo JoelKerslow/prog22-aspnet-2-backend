@@ -20,4 +20,7 @@ public class AddressEntity
 
     [Required]
     public string Country { get; set; } = null!;
+
+
+    public ICollection<CustomerProfileEntity> Customers { get; set; } = new HashSet<CustomerProfileEntity>();
 }
