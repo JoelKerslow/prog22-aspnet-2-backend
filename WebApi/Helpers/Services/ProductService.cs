@@ -71,8 +71,12 @@ public class ProductService
 	{
 		if(entity.Reviews.Count > 0)
 		{
-			int reviewAverage = (int)Math.Round(entity.Average(product => product.Reviews.Rating));
-			return reviewAverage;
+			double reviewRatingSum = 0;
+			foreach (var rating in entity.Reviews)
+			{
+				reviewRatingSum += rating.Rating;
+			}
+			return (int)Math.Round(reviewRatingSum / entity.Reviews.Count);
 		}
 		return 0;
 	}
