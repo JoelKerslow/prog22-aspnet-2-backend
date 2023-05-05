@@ -21,4 +21,5 @@ public class ProductDto
 	public string Category { get; set; } = null!;
 	public string Department { get; set; } = null!;
 	public string Tag { get; set; } = null!;
+	public int ReviewAverage { get; set; }
 }

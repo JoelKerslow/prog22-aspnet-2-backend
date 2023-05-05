@@ -52,17 +52,28 @@ public class ProductService
 	private IEnumerable<ProductDto> ConvertEntities(IEnumerable<ProductEntity> entities)
 	{
 		var products = new List<ProductDto>();
-
+		
 		foreach (var item in entities)
 		{
 			ProductDto dto = item;
 			dto.Category = item.Category.CategoryName;
 			dto.Department = item.Department.Name;
 			dto.Tag = item.Tag.Name;
+			dto.ReviewAverage = CalculateReviewAverage(item);
 
 			products.Add(dto);
 		}
 
 		return products;
+	}
+
+	private int CalculateReviewAverage(ProductEntity entity)
+	{
+		if(entity.Reviews.Count > 0)
+		{
+			int reviewAverage = (int)Math.Round(entity.Average(product => product.Reviews.Rating));
+			return reviewAverage;
+		}
+		return 0;
 	}
 }
