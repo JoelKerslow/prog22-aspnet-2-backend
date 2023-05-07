@@ -17,11 +17,21 @@ public class ProductRepository : Repository<ProductEntity>
 
 	public override async Task<IEnumerable<ProductEntity>> GetAllAsync()
 	{
-		return await _context.Products.Include("Tag").Include("Category").Include("Department").ToListAsync();
+		return await _context.Products.Include("Tag").Include("Category").Include("Department").Include("Reviews").ToListAsync();
 	}
 
 	public override async Task<IEnumerable<ProductEntity>> GetAllAsync(Expression<Func<ProductEntity, bool>> predicate)
 	{
-		return await _context.Products.Include("Tag").Include("Category").Include("Department").Where(predicate).ToListAsync();
+		return await _context.Products.Include("Tag").Include("Category").Include("Department").Include("Reviews").Where(predicate).ToListAsync();
+	}
+
+	public override async Task<ProductEntity> GetAsync(Expression<Func<ProductEntity, bool>> predicate)
+	{
+		var entity = await _context.Products.Include("Tag").Include("Category").Include("Department").Include("Reviews").FirstOrDefaultAsync(predicate);
+
+		if (entity != null)
+			return entity;
+
+		return null!;
 	}
 }

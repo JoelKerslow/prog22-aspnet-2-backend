@@ -58,6 +58,12 @@ namespace WebApi.Controllers
 			return Ok(await _productService.GetByTagAsync(tagId));
 		}
 
+		[HttpGet("Id")]
+		public async Task<IActionResult> GetById(int productId)
+		{
+			return Ok(await _productService.GetByIdAsync(productId));
+		}
+
 		[HttpGet]
 		public async Task<IActionResult> Search(string searchValue)
 		{

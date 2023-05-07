@@ -16,16 +16,12 @@ public class CustomerProfileEntity
 	[Required]
 	public string Email { get; set; } = null!;
 
+	public string? ProfileImageUrl { get; set; }
+
 	[Required]
 	public string UserId { get; set; } = null!;
 
-	[Required]
-	public int AddressId { get; set; }
-	public AddressEntity Address { get; set; } = null!;
-
-	[Required]
-	public int ShippingAddressId { get; set; }
-	public AddressEntity ShippingAddress { get; set; } = null!;
+	public ICollection<AddressEntity> Addresses { get; set; } = new HashSet<AddressEntity>();
 
 	public ICollection<PromoCodeEntity> PromoCodes { get; set; } = new HashSet<PromoCodeEntity>();
 

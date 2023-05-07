@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Contexts;
 using WebApi.Helpers.Repositories;
@@ -23,6 +24,7 @@ builder.Services.AddScoped<ProductRepository>();
 builder.Services.AddScoped<CategoryRepository>();
 builder.Services.AddScoped<DepartmentRepository>();
 builder.Services.AddScoped<TagRepository>();
+builder.Services.AddScoped<CustomerProfileRepository>();
 builder.Services.AddScoped<ShowcaseRepository>();
 
 #endregion
@@ -31,10 +33,25 @@ builder.Services.AddScoped<ShowcaseRepository>();
 
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<ShowcaseService>();
+builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<CustomerProfileService>();
+
+#endregion
+
+#region Identity
+
+builder.Services.AddDefaultIdentity<IdentityUser>(x =>
+{
+	x.User.RequireUniqueEmail = true;
+	x.SignIn.RequireConfirmedAccount = false;
+	x.Password.RequiredLength = 8;
+}).AddEntityFrameworkStores<IdentityContext>();
 
 #endregion
 
 var app = builder.Build();
+app.UseCors(x => x.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();

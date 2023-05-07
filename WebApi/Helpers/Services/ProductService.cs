@@ -49,20 +49,51 @@ public class ProductService
 		return ConvertEntities(await _productRepo.GetAllAsync(x => x.TagId == tagId));
 	}
 
+	public async Task<ProductDto> GetByIdAsync(int productId)
+	{
+		return ConvertEntities(await _productRepo.GetAsync(x => x.Id == productId));
+	}
+
 	private IEnumerable<ProductDto> ConvertEntities(IEnumerable<ProductEntity> entities)
 	{
 		var products = new List<ProductDto>();
-
+		
 		foreach (var item in entities)
 		{
 			ProductDto dto = item;
 			dto.Category = item.Category.CategoryName;
 			dto.Department = item.Department.Name;
 			dto.Tag = item.Tag.Name;
+			dto.ReviewAverage = CalculateReviewAverage(item);
 
 			products.Add(dto);
 		}
 
 		return products;
+	}
+
+	private ProductDto ConvertEntities(ProductEntity entity)
+	{
+		ProductDto dto = entity;
+		dto.Category = entity.Category.CategoryName;
+		dto.Department = entity.Department.Name;
+		dto.Tag = entity.Tag.Name;
+		dto.ReviewAverage = CalculateReviewAverage(entity);
+
+		return dto;
+	}
+
+	private int CalculateReviewAverage(ProductEntity entity)
+	{
+		if(entity.Reviews.Count > 0)
+		{
+			double reviewRatingSum = 0;
+			foreach (var review in entity.Reviews)
+			{
+				reviewRatingSum += review.Rating;
+			}
+			return (int)Math.Round(reviewRatingSum / entity.Reviews.Count);
+		}
+		return 0;
 	}
 }
