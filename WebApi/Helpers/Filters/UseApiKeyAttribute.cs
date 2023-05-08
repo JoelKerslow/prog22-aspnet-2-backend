@@ -10,7 +10,7 @@ public class UseApiKeyAttribute : Attribute, IAsyncActionFilter
 		var config = context.HttpContext.RequestServices.GetService<IConfiguration>();
 		var apiKey = config!.GetValue<string>("ApiKey");
 
-		if (!context.HttpContext.Request.Headers.TryGetValue("ApiKey", out var key))
+		if (!context.HttpContext.Request.Headers.TryGetValue("Api-Key", out var key))
 		{
 			context.Result = new UnauthorizedResult();
 			return;
