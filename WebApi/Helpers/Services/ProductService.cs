@@ -65,6 +65,7 @@ public class ProductService
 			dto.Department = item.Department.Name;
 			dto.Tag = item.Tag.Name;
 			dto.ReviewAverage = CalculateReviewAverage(item);
+			dto.ReviewCount = item.Reviews.Count;
 
 			products.Add(dto);
 		}
@@ -79,6 +80,7 @@ public class ProductService
 		dto.Department = entity.Department.Name;
 		dto.Tag = entity.Tag.Name;
 		dto.ReviewAverage = CalculateReviewAverage(entity);
+		dto.ReviewCount = entity.Reviews.Count;
 
 		return dto;
 	}
