@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebApi.Helpers.Services;
 using WebApi.Models.Schemas;
 
@@ -40,5 +41,12 @@ public class AuthenticationController : ControllerBase
 		}
 
 		return BadRequest("Incorrect email or password");
+	}
+
+	[Authorize]
+	[HttpGet("Authorize")]
+	public IActionResult Authorize()
+	{
+		return Ok();
 	}
 }
