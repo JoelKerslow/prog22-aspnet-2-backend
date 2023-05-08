@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApi.Helpers.Filters;
 using WebApi.Helpers.Services;
 using WebApi.Models.Schemas;
 
@@ -6,6 +7,7 @@ namespace WebApi.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[UseApiKey]
 	public class ProductsController : ControllerBase
 	{
 		private readonly ProductService _productService;

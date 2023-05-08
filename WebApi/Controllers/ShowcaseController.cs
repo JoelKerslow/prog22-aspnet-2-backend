@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Helpers.Filters;
 using WebApi.Helpers.Services;
 
 namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ShowcaseController : ControllerBase
+	[UseApiKey]
+	public class ShowcaseController : ControllerBase
     {
         private readonly ShowcaseService _showcaseService;
 

@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Helpers.Filters;
 using WebApi.Helpers.Repositories;
 
 namespace WebApi.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[UseApiKey]
 	public class TagsController : ControllerBase
 	{
 		private readonly TagRepository _tagRepository;
