@@ -17,7 +17,9 @@ public class ProductSchema
 	[Required]
 	public decimal Price { get; set; }
 
-	public string? Color { get; set; }
+	public Color? Color { get; set; }
+
+	public Size? Size { get; set; }
 
 	public string? ImageUrl { get; set; }
 
@@ -33,6 +35,10 @@ public class ProductSchema
 	[Required]
 	public int TagId { get; set; }
 
+	public DateTime CreatedAt { get; set; }
+
+	public DateTime ModifiedAt { get; set; }
+
 
 	public static implicit operator ProductEntity(ProductSchema schema)
 	{
@@ -43,11 +49,14 @@ public class ProductSchema
 			Brand = schema.Brand,
 			Price = schema.Price,
 			Color = schema.Color,
+			Size = schema.Size,
 			ImageUrl = schema.ImageUrl,
 			Stock = schema.Stock,
 			CategoryId = schema.CategoryId,
 			DepartmentId = schema.DepartmentId,
 			TagId = schema.TagId,
+			CreatedAt = schema.CreatedAt,
+			ModifiedAt = schema.ModifiedAt
 		};
 	}
 }
