@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using WebApi.Contexts;
+using WebApi.Helpers.Filters;
 using WebApi.Helpers.Repositories;
 using WebApi.Helpers.Services;
 
@@ -86,6 +88,16 @@ builder.Services.AddAuthentication(x =>
 		ValidAudience = builder.Configuration.GetSection("TokenValidation").GetValue<string>("ValidAudience"),
 		ClockSkew = TimeSpan.FromSeconds(0),
 	};
+});
+
+#endregion
+
+#region Swagger
+
+builder.Services.AddSwaggerGen(config =>
+{
+	config.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "V1" });
+	config.OperationFilter<ApiHeaderParameters>();
 });
 
 #endregion
