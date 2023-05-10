@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+using WebApi.Helpers.Services;
 using System.Threading.Tasks;
 
 namespace WebApi.Controllers
@@ -10,64 +10,41 @@ namespace WebApi.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        [HttpGet("GoogleLogin")]
-        public IActionResult GoogleLogin()
+        private readonly AuthService _authService;
+
+        public LoginController(AuthService authService)
         {
-            var authProperties = new AuthenticationProperties { RedirectUri = Url.Action("GoogleResponse") };
-            return Challenge(authProperties, "Google");
+            _authService = authService;
         }
 
-        [HttpGet("GoogleResponse")]
-        public async Task<IActionResult> GoogleResponse()
+        [HttpPost("GoogleLogin")]
+        public async Task<IActionResult> GoogleLogin(string accessToken)
         {
-            var result = await HttpContext.AuthenticateAsync("Google");
-            if (!result.Succeeded) return BadRequest();
+            var jwtToken = await _authService.SocialLoginAsync("Google", accessToken);
+            if (!string.IsNullOrEmpty(jwtToken))
+                return Ok(jwtToken);
 
-            var claimsIdentity = new ClaimsIdentity(result.Principal.Claims, "Google");
-            var principal = new ClaimsPrincipal(claimsIdentity);
-            await HttpContext.SignInAsync("Cookies", principal);
-
-            return Redirect("/");
+            return BadRequest("Invalid access token");
         }
 
-        [HttpGet("FacebookLogin")]
-        public IActionResult FacebookLogin()
+        [HttpPost("FacebookLogin")]
+        public async Task<IActionResult> FacebookLogin(string accessToken)
         {
-            var authProperties = new AuthenticationProperties { RedirectUri = Url.Action("FacebookResponse") };
-            return Challenge(authProperties, "Facebook");
+            var jwtToken = await _authService.SocialLoginAsync("Facebook", accessToken);
+            if (!string.IsNullOrEmpty(jwtToken))
+                return Ok(jwtToken);
+
+            return BadRequest("Invalid access token");
         }
 
-        [HttpGet("FacebookResponse")]
-        public async Task<IActionResult> FacebookResponse()
+        [HttpPost("TwitterLogin")]
+        public async Task<IActionResult> TwitterLogin(string accessToken)
         {
-            var result = await HttpContext.AuthenticateAsync("Facebook");
-            if (!result.Succeeded) return BadRequest();
+            var jwtToken = await _authService.SocialLoginAsync("Twitter", accessToken);
+            if (!string.IsNullOrEmpty(jwtToken))
+                return Ok(jwtToken);
 
-            var claimsIdentity = new ClaimsIdentity(result.Principal.Claims, "Facebook");
-            var principal = new ClaimsPrincipal(claimsIdentity);
-            await HttpContext.SignInAsync("Cookies", principal);
-
-            return Redirect("/");
-        }
-
-        [HttpGet("TwitterLogin")]
-        public IActionResult TwitterLogin()
-        {
-            var authProperties = new AuthenticationProperties { RedirectUri = Url.Action("TwitterResponse") };
-            return Challenge(authProperties, "Twitter");
-        }
-
-        [HttpGet("TwitterResponse")]
-        public async Task<IActionResult> TwitterResponse()
-        {
-            var result = await HttpContext.AuthenticateAsync("Twitter");
-            if (!result.Succeeded) return BadRequest();
-
-            var claimsIdentity = new ClaimsIdentity(result.Principal.Claims, "Twitter");
-            var principal = new ClaimsPrincipal(claimsIdentity);
-            await HttpContext.SignInAsync("Cookies", principal);
-
-            return Redirect("/");
+            return BadRequest("Invalid access token");
         }
     }
 }
