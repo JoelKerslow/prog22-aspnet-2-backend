@@ -37,7 +37,7 @@ public class ProductSchema
 
 	public DateTime CreatedAt { get; set; }
 
-	public DateTime ModifiedAt { get; set; }
+	public DateTime? ModifiedAt { get; set; }
 
 
 	public static implicit operator ProductEntity(ProductSchema schema)

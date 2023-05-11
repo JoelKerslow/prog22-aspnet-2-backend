@@ -46,7 +46,7 @@ namespace WebApi.Models.Entities
 
 		public DateTime CreatedAt { get; set; }
 
-		public DateTime ModifiedAt { get; set; }
+		public DateTime? ModifiedAt { get; set; }
 
 
 		public ICollection<ProductReviewEntity> Reviews { get; set; } = new HashSet<ProductReviewEntity>();

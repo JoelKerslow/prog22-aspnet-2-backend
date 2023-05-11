@@ -32,6 +32,7 @@ namespace WebApi.Controllers
 		[HttpPost("Create")]
 		public async Task<IActionResult> Create(ProductSchema schema)
 		{
+			schema.CreatedAt = DateTime.Now;
 			if (ModelState.IsValid)
 			{
 				var product = await _productService.CreateAsync(schema);
