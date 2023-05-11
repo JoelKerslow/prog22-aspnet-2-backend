@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using WebApi.Contexts;
 using WebApi.Helpers.Repositories.BaseRepositories;
+using WebApi.Models;
 using WebApi.Models.Entities;
 
 namespace WebApi.Helpers.Repositories;
@@ -33,5 +34,10 @@ public class ProductRepository : Repository<ProductEntity>
 			return entity;
 
 		return null!;
+	}
+
+	public async Task<IEnumerable<Size>> GetAllSizesAsync()
+	{
+		return await Task.Run(() => Enum.GetValues(typeof(Size)).Cast<Size>());
 	}
 }

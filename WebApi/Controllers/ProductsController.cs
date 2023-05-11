@@ -18,9 +18,15 @@ namespace WebApi.Controllers
 		}
 
 		[HttpGet("All")]
-		public async Task<IActionResult> GetAll()
+		public async Task<IActionResult> GetAllProducts()
 		{
-			return Ok(await _productService.GetAllAsync());
+			return Ok(await _productService.GetAllProductsAsync());
+		}
+
+		[HttpGet("Sizes")]
+		public async Task<IActionResult> GetSizes()
+		{
+			return Ok(await _productService.GetAllSizesAsync());
 		}
 
 		[HttpPost("Create")]
@@ -63,14 +69,85 @@ namespace WebApi.Controllers
 		[HttpGet("Id")]
 		public async Task<IActionResult> GetById(int productId)
 		{
-			return Ok(await _productService.GetByIdAsync(productId));
+			return Ok(await _productService.GetProductByIdAsync(productId));
 		}
 
-		[HttpGet]
+		[HttpGet("Search")]
 		public async Task<IActionResult> Search(string searchValue)
 		{
 			return Ok(await _productService.SearchAsync(searchValue));
 		}
 
+		[HttpGet("Newest")]
+		public async Task<IActionResult> GetByNewestDate()
+		{
+			var products = await _productService.GetByNewestDateAsync();
+
+			if (products.Count() == 0) return NoContent();
+			return Ok(products);
+		}
+
+		[HttpGet("Oldest")]
+		public async Task<IActionResult> GetByOldestDate()
+		{
+			var products = await _productService.GetByOldestDateAsync();
+
+			if (products.Count() == 0) return NoContent();
+			return Ok(products);
+		}
+
+		[HttpGet("Price")]
+		public async Task<IActionResult> GetByPrice(int amount)
+		{
+			var products = await _productService.GetByPriceAsync(amount);
+
+			if (products.Count() == 0) return NoContent();
+			return Ok(products);
+		}
+
+		[HttpGet("Price/Highest")]
+		public async Task<IActionResult> GetByHighestPrice()
+		{
+			var products = await _productService.GetByHighestPriceAsync();
+
+			if (products.Count() == 0) return NoContent();
+			return Ok(products);
+		}
+
+		[HttpGet("Price/Lowest")]
+		public async Task<IActionResult> GetByLowestPrice()
+		{
+			var products = await _productService.GetByLowestPriceAsync();
+
+			if (products.Count() == 0) return NoContent();
+			return Ok(products);
+		}
+
+		[HttpGet("Color")]
+		public async Task<IActionResult> GetByColor(string color)
+		{
+			var products = await _productService.GetByColorAsync(color);
+
+			if (products.Count() == 0) return NoContent();
+			return Ok(products);
+		}
+
+		[HttpGet("Size")]
+		public async Task<IActionResult> GetBySize(string size)
+		{
+			var products = await _productService.GetBySizeAsync(size);
+
+			if (products.Count() == 0) return NoContent();
+			return Ok(products);
+		}
+
+		[HttpGet("Size/Color/Price/Department/Tag")]
+		public async Task<IActionResult> GetBySizeColorPriceDepartmentTag(int minPrice, int maxPrice, int tagId, int departmentId, string size, string color)
+		{
+			var products = await _productService.GetBySizeColorPriceDepartmentTagAsync(minPrice, maxPrice, tagId, departmentId, size, color);
+
+			if (products.Count() == 0) return NoContent();
+			return Ok(products);
+		}
 	}
 }
