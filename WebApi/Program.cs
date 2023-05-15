@@ -32,6 +32,8 @@ builder.Services.AddScoped<TagRepository>();
 builder.Services.AddScoped<CustomerProfileRepository>();
 builder.Services.AddScoped<ShowcaseRepository>();
 builder.Services.AddScoped<OrderReviewRepository>();
+builder.Services.AddScoped<ProductReviewRepository>();
+
 
 #endregion
 
@@ -43,6 +45,7 @@ builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<CustomerProfileService>();
 builder.Services.AddScoped<OrderService>();
+builder.Services.AddScoped<ProductReviewService>();
 
 #endregion
 

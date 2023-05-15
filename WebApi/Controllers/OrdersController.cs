@@ -25,7 +25,7 @@ namespace WebApi.Controllers
 			{
 				if(await _orderService.CreateOrderReviewAsync(schema))
 				{
-					return Ok();
+					return Created("", null);
 				}
 
 				return Problem();
