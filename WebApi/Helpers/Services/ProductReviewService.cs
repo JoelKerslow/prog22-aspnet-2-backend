@@ -1,4 +1,5 @@
 ﻿using WebApi.Helpers.Repositories;
+using WebApi.Models.Dtos;
 using WebApi.Models.Schemas;
 
 namespace WebApi.Helpers.Services;
@@ -22,4 +23,25 @@ public class ProductReviewService
 
 		return true;
 	}
+
+	public async Task<ICollection<ProductReviewDto>> GetAllAsync(int ProductId)
+	{
+		var result = await _productReviewRepository.GetAllAsync();
+		var DtosList = new List<ProductReviewDto>();
+		
+		foreach (var item in result)
+		{
+			var Dto = new ProductReviewDto();
+			Dto.Id = item.Id;
+			Dto.Rating = item.Rating;
+			Dto.Comment = item.Comment;
+			Dto.CustomerId = item.CustomerId;
+			Dto.ProductId = item.ProductId;
+			Dto.CustomerFirstName = item.Customer.FirstName;
+			Dto.CustomerLastName = item.Customer.LastName;
+
+			DtosList.Add(Dto);
+		}
+		return DtosList;
+    }
 }

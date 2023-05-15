@@ -33,5 +33,13 @@ namespace WebApi.Controllers
 
 			return BadRequest();
 		}
+
+		[HttpGet]
+		[Authorize]
+		public async Task<IActionResult> GetAllReviews(int productId)
+		{
+			var reviews = await _productReviewService.GetAllAsync(productId);	
+			return Ok(reviews);
+		}
 	}
 }

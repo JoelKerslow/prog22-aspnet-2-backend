@@ -17,9 +17,9 @@ public class ShowcaseEntity
     [Required]  
     public string ImgUrl { get; set; } = null!;
 
-    public static implicit operator ShowcaseDTO(ShowcaseEntity entity)
+    public static implicit operator ShowcaseDto(ShowcaseEntity entity)
     {
-        return new ShowcaseDTO
+        return new ShowcaseDto
         {
             Id = entity.Id,
             Title = entity.Title,
