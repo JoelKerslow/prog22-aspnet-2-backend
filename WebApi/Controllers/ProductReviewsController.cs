@@ -35,7 +35,6 @@ namespace WebApi.Controllers
 		}
 
 		[HttpGet]
-		[Authorize]
 		public async Task<IActionResult> GetAllReviews(int productId)
 		{
 			var reviews = await _productReviewService.GetAllAsync(productId);	

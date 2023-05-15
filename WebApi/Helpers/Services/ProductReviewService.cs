@@ -26,7 +26,7 @@ public class ProductReviewService
 
 	public async Task<ICollection<ProductReviewDto>> GetAllAsync(int ProductId)
 	{
-		var result = await _productReviewRepository.GetAllAsync();
+		var result = await _productReviewRepository.GetAllAsync(ProductId);
 		var DtosList = new List<ProductReviewDto>();
 		
 		foreach (var item in result)

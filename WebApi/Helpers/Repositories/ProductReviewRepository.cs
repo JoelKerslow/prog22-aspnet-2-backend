@@ -17,6 +17,6 @@ public class ProductReviewRepository : Repository<ProductReviewEntity>
 
     public async Task<IEnumerable<ProductReviewEntity>> GetAllAsync(int productId)
     {
-        return await _context.ProductReviews.Where(x=> x.ProductId == productId).ToListAsync();
+        return await _context.ProductReviews.Include("Customer").Where(x => x.ProductId == productId).ToListAsync();
     }
 }
