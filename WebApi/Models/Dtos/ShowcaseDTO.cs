@@ -4,7 +4,7 @@ using WebApi.Models.Entities;
 
 namespace WebApi.Models.Dtos
 {
-    public class ShowcaseDTO
+    public class ShowcaseDto
     {
         public int Id { get; set; }
 

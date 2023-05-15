@@ -12,13 +12,13 @@ public class ShowcaseService
         _showcaseRepo = repository;
     }
 
-    public async Task<IEnumerable<ShowcaseDTO>> GetAllAsync()
+    public async Task<IEnumerable<ShowcaseDto>> GetAllAsync()
     {
         var showcaseList = await _showcaseRepo.GetAllAsync();
-        var dtoList = new List<ShowcaseDTO>();
+        var dtoList = new List<ShowcaseDto>();
         foreach (var showcase in showcaseList)
         {
-            ShowcaseDTO dto = showcase;
+            ShowcaseDto dto = showcase;
             if (dto != null)
                 dtoList.Add(dto);
         }
