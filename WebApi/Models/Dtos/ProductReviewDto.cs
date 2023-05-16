@@ -13,5 +13,7 @@ namespace WebApi.Models.Dtos
         public string CustomerFirstName { get; set; } = null!;
         public string CustomerLastName { get; set; } = null!;
 
-    }
+		public DateTime CreatedDate { get; set; }
+
+	}
 }

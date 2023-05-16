@@ -14,6 +14,9 @@ namespace WebApi.Models.Entities
         public string? Comment { get; set; }
 
         [Required]
+		public DateTime CreatedDate { get; set; }
+
+		[Required]
         public int CustomerId { get; set; }
         public CustomerProfileEntity Customer { get; set; } = null!;
 
@@ -32,6 +35,7 @@ namespace WebApi.Models.Entities
                 ProductId = entity.ProductId,
                 CustomerFirstName = entity.Customer.FirstName,
                 CustomerLastName = entity.Customer.LastName,
+                CreatedDate= entity.CreatedDate,
             };
         }
     }

@@ -19,7 +19,7 @@ public class OrderReviewSchema
 		{
 			Comment = scema.Comment,
 			Rating = scema.Rating,
-			OrderId = scema.OrderId
+			OrderId = scema.OrderId,
 		};
 	}
 }
