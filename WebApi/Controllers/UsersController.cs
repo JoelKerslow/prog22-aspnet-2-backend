@@ -35,7 +35,7 @@ public class UsersController : ControllerBase
 	}
 
 	[HttpPut("CustomerProfile/Update")]
-	//[Authorize]
+	[Authorize]
 	public async Task<IActionResult> UpdateProfile(CustomerUpdateSchema schema)
 	{
 		if (ModelState.IsValid)
