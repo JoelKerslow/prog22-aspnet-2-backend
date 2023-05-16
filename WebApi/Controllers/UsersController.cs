@@ -21,8 +21,9 @@ public class UsersController : ControllerBase
 	[Authorize]
 	public async Task<IActionResult> GetProfile()
 	{
-		string token = HttpContext.Request.Headers["Authorization"]!;
-		var customerProfile = await _customerProfileService.GetCustomerProfile(token);
+		string bearerToken = HttpContext.Request.Headers["Authorization"]!;
+		var token = bearerToken.Split(" ");
+		var customerProfile = await _customerProfileService.GetCustomerProfile(token[1]);
 
 		if (customerProfile == null)
 		{
