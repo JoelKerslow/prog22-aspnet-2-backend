@@ -19,15 +19,6 @@ public class CustomerRegisterSchema
 	public string Password { get; set; } = null!;
 
 
-	public static implicit operator IdentityUser(CustomerRegisterSchema schema)
-	{
-		return new IdentityUser
-		{
-			Email = schema.Email,
-			UserName = schema.Email
-		};
-	}
-
 	public static implicit operator CustomerProfileEntity(CustomerRegisterSchema schema)
 	{
 		return new CustomerProfileEntity
@@ -35,6 +26,15 @@ public class CustomerRegisterSchema
 			FirstName = schema.FirstName,
 			LastName = schema.LastName,
 			Email = schema.Email,
+		};
+	}
+
+	public static implicit operator IdentityUser(CustomerRegisterSchema schema)
+	{
+		return new IdentityUser
+		{
+			Email = schema.Email,
+			UserName = schema.Email
 		};
 	}
 }
