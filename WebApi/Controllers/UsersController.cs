@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Helpers.Filters;
 using WebApi.Helpers.Services;
+using WebApi.Models.Schemas;
 
 namespace WebApi.Controllers;
 
@@ -31,5 +32,20 @@ public class UsersController : ControllerBase
 		}
 
 		return Ok(customerProfile);
+	}
+
+	[HttpPut("CustomerProfile/Update")]
+	//[Authorize]
+	public async Task<IActionResult> UpdateProfile(CustomerUpdateSchema schema)
+	{
+		if (ModelState.IsValid)
+		{
+			if (await _customerProfileService.UpdateCustomerProfileAsync(schema))
+				return Ok();
+
+			return Problem();
+		}
+
+		return BadRequest();
 	}
 }

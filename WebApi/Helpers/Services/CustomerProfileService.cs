@@ -1,6 +1,7 @@
 ﻿using WebApi.Helpers.Repositories;
 using WebApi.Models.Dtos;
 using WebApi.Models.Entities;
+using WebApi.Models.Schemas;
 
 namespace WebApi.Helpers.Services;
 
@@ -31,5 +32,27 @@ public class CustomerProfileService
 			return null!;
 		}
 		return customerProfileEntity;
+	}
+
+	public async Task<bool> UpdateCustomerProfileAsync(CustomerUpdateSchema schema)
+	{
+		var customer = await _customerProfileRepository.GetAsync(x => x.Id == schema.Id);
+		if (customer != null)
+		{
+			try
+			{
+				customer.FirstName = schema.FirstName;
+				customer.LastName = schema.LastName;
+				customer.ProfileImageUrl = schema.ProfileImageUrl;
+
+				await _customerProfileRepository.UpdateAsync(customer);
+				return true;
+			}
+			catch (Exception)
+			{
+			}
+		}
+
+		return false;
 	}
 }
