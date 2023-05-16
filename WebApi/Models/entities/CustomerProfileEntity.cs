@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WebApi.Models.Dtos;
 
 namespace WebApi.Models.Entities;
 
@@ -25,5 +26,16 @@ public class CustomerProfileEntity
 
 	public ICollection<PromoCodeEntity> PromoCodes { get; set; } = new HashSet<PromoCodeEntity>();
 
-
+	public static implicit operator CustomerProfileDto(CustomerProfileEntity entity)
+	{
+		return new CustomerProfileDto
+		{
+			Id = entity.Id,
+			FirstName = entity.FirstName,
+			LastName = entity.LastName,
+			Email = entity.Email,
+			ProfileImageUrl = entity.ProfileImageUrl,
+			UserId = entity.UserId,
+		};
+	}
 }

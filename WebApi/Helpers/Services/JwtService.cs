@@ -31,4 +31,19 @@ public class JwtService
 
 		return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
 	}
+
+	public string GetIdFromToken(string token)
+	{
+		var tokenHandler = new JwtSecurityTokenHandler();
+		var jwtToken = tokenHandler.ReadJwtToken(token);
+
+		var idClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "id");
+
+		if (idClaim != null)
+		{
+			return idClaim.Value;
+		}
+
+		return null!;
+	}
 }
