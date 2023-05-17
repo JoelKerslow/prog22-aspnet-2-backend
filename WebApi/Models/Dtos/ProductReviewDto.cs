@@ -12,6 +12,7 @@ namespace WebApi.Models.Dtos
         public int ProductId { get; set; }
         public string CustomerFirstName { get; set; } = null!;
         public string CustomerLastName { get; set; } = null!;
+        public string? ImageUrl { get; set; }
 
     }
 }
