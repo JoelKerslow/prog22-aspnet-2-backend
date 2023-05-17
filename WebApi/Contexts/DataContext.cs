@@ -21,7 +21,8 @@ namespace WebApi.Contexts
         public DbSet<AddressEntity> Addresses { get; set; }
         public DbSet<ShowcaseEntity> Showcases { get; set; }
         public DbSet<CartEntity> CustomerCarts { get; set; }
-        public DbSet<WishlistEntity> CustomerWishlists { get; set; }
+		public DbSet<CartItemEntity> CartItems { get; set; }
+		public DbSet<WishlistEntity> CustomerWishlists { get; set; }
 
 
     }
