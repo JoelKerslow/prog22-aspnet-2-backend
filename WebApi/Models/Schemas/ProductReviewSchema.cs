@@ -23,6 +23,7 @@ public class ProductReviewSchema
 			ProductId = schema.ProductId,
 			Rating = schema.Rating,
 			Comment = schema.Comment,
+			CreatedDate = DateTime.Now,
 		};
 	}
 }

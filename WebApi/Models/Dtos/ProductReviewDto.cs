@@ -14,5 +14,7 @@ namespace WebApi.Models.Dtos
         public string CustomerLastName { get; set; } = null!;
         public string? ImageUrl { get; set; }
 
-    }
+		public DateTime CreatedDate { get; set; }
+
+	}
 }
