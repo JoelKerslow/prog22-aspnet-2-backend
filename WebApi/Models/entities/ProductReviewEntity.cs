@@ -35,6 +35,7 @@ namespace WebApi.Models.Entities
                 ProductId = entity.ProductId,
                 CustomerFirstName = entity.Customer.FirstName,
                 CustomerLastName = entity.Customer.LastName,
+                ImageUrl = entity.Customer.ProfileImageUrl
                 CreatedDate= entity.CreatedDate,
             };
         }
