@@ -14,5 +14,6 @@ namespace WebApi.Models.entities
 
 		[Required]
 		public int ProductId { get; set; }
+		public ProductEntity Product { get; set; } = null!;
 	}
 }
