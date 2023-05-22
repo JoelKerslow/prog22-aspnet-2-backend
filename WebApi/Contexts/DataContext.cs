@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using WebApi.Models.entities;
 using WebApi.Models.Entities;
 
 namespace WebApi.Contexts
@@ -23,7 +24,6 @@ namespace WebApi.Contexts
         public DbSet<CartEntity> Carts { get; set; }
         public DbSet<CartItemEntity> CartItems { get; set; }
         public DbSet<WishlistEntity> Wishlists { get; set; }
-
-
-    }
+		public DbSet<WishlistItemEntity> WishlistItems { get; set; }
+	}
 }

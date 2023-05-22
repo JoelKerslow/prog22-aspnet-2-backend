@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using System.Text.Json.Serialization;
 using WebApi.Contexts;
 using WebApi.Helpers.Filters;
 using WebApi.Helpers.Repositories;
@@ -33,6 +34,8 @@ builder.Services.AddScoped<CustomerProfileRepository>();
 builder.Services.AddScoped<ShowcaseRepository>();
 builder.Services.AddScoped<OrderReviewRepository>();
 builder.Services.AddScoped<ProductReviewRepository>();
+builder.Services.AddScoped<CartRepository>();
+builder.Services.AddScoped<PromoCodeRepository>();
 
 
 #endregion
@@ -46,6 +49,8 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<CustomerProfileService>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<ProductReviewService>();
+builder.Services.AddScoped<CartService>();
+builder.Services.AddScoped<PromoCodeService>();
 
 #endregion
 
@@ -93,6 +98,15 @@ builder.Services.AddAuthentication(x =>
 		ValidAudience = builder.Configuration.GetSection("TokenValidation").GetValue<string>("ValidAudience"),
 		ClockSkew = TimeSpan.FromSeconds(0),
 	};
+});
+
+#endregion
+
+#region RefHandler
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+	options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
 });
 
 #endregion
