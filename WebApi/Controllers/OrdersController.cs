@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebApi.Helpers.Filters;
 using WebApi.Helpers.Services;
 using WebApi.Models.Schemas;
@@ -18,6 +19,7 @@ namespace WebApi.Controllers
 		}
 
 		[HttpGet]
+		[Authorize]
 		public async Task<IActionResult> GetOrdersByCustomer(int customerId)
 		{
 			var orders = await _orderService.GetOrdersAsync(customerId);
@@ -31,6 +33,7 @@ namespace WebApi.Controllers
 		}
 
 		[HttpPost("/Review")]
+		[Authorize]
 		public async Task<IActionResult> PostReview(OrderReviewSchema schema)
 		{
 			if (ModelState.IsValid)
