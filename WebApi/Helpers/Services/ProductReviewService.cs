@@ -39,6 +39,7 @@ public class ProductReviewService
 			Dto.ProductId = item.ProductId;
 			Dto.CustomerFirstName = item.Customer.FirstName;
 			Dto.CustomerLastName = item.Customer.LastName;
+			Dto.CreatedDate = item.CreatedDate;
 
 			DtosList.Add(Dto);
 		}
