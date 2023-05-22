@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WebApi.Models.Dtos;
 
 namespace WebApi.Models.Entities;
 
@@ -26,4 +27,18 @@ public class OrderEntity
     public int? PromoCodeId { get; set; }
     public PromoCodeEntity? PromoCode { get; set; }
 
+
+    public static implicit operator OrderDto(OrderEntity entity)
+    {
+        return new OrderDto
+        {
+            Id = entity.Id,
+            CustomerId = entity.CustomerId,
+            OrderDate = entity.OrderDate,
+            Status = entity.Status,
+            TotalAmount = entity.TotalAmount,
+            CustomerComment = entity.CustomerComment,
+            PromoCodeId = entity.PromoCodeId,
+        };
+    }
 }

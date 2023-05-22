@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebApi.Helpers.Filters;
 using WebApi.Helpers.Services;
 using WebApi.Models.Schemas;
@@ -16,6 +15,19 @@ namespace WebApi.Controllers
 		public OrdersController(OrderService orderService)
 		{
 			_orderService = orderService;
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> GetOrdersByCustomer(int customerId)
+		{
+			var orders = await _orderService.GetOrdersAsync(customerId);
+
+			if(orders.Count() > 0)
+			{
+				return Ok(orders);	
+			}
+
+			return NotFound();
 		}
 
 		[HttpPost("/Review")]

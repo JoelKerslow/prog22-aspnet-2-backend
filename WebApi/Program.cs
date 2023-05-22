@@ -36,6 +36,7 @@ builder.Services.AddScoped<OrderReviewRepository>();
 builder.Services.AddScoped<ProductReviewRepository>();
 builder.Services.AddScoped<CartRepository>();
 builder.Services.AddScoped<PromoCodeRepository>();
+builder.Services.AddScoped<OrderRepository>();
 
 
 #endregion
