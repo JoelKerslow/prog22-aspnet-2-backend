@@ -103,15 +103,6 @@ builder.Services.AddAuthentication(x =>
 
 #endregion
 
-#region RefHandler
-
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-	options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-});
-
-#endregion
-
 #region Swagger
 
 builder.Services.AddSwaggerGen(config =>
