@@ -113,15 +113,6 @@ builder.Services.AddSwaggerGen(config =>
 
 #endregion
 
-#region RefHandler
-
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-	options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-});
-
-#endregion
-
 
 
 var app = builder.Build();

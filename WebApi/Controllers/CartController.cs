@@ -21,8 +21,6 @@ namespace WebApi.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetCart()
 		{
-			try
-			{
 				var cart = await _cartService.GetUserCartAsync(GetBearerToken());
 
 				if (cart == null)
@@ -30,8 +28,6 @@ namespace WebApi.Controllers
 					return NotFound();
 				}
 				return Ok(cart);
-			}
-			catch (Exception ex) { return Problem(ex.Message); }
 		}
 
 		[HttpPost("Create")]
