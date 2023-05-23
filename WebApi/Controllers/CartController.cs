@@ -21,13 +21,17 @@ namespace WebApi.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetCart()
 		{
-			var cart = await _cartService.GetUserCartAsync(GetBearerToken());
-
-			if (cart == null)
+			try
 			{
-				return NotFound();
+				var cart = await _cartService.GetUserCartAsync(GetBearerToken());
+
+				if (cart == null)
+				{
+					return NotFound();
+				}
+				return Ok(cart);
 			}
-			return Ok(cart);
+			catch (Exception ex) { return Problem(ex.Message); }
 		}
 
 		[HttpPost("Create")]

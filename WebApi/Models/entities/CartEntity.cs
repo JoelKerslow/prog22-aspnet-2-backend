@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace WebApi.Models.Entities;
 
@@ -24,6 +25,7 @@ public class CartEntity
 	[NotMapped]
 	public decimal TotalPrice { get; set; }
 
+	[JsonIgnore]
 	public ICollection<CartItemEntity> CartItems { get; set; } = new HashSet<CartItemEntity>();
 }
 
