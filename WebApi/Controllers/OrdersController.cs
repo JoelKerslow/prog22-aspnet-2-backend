@@ -32,6 +32,23 @@ namespace WebApi.Controllers
 			return NotFound();
 		}
 
+		[HttpPost]
+		[Authorize]
+		public async Task<IActionResult> CreateOrder(OrderSchema schema)
+		{
+			if (ModelState.IsValid)
+			{
+				if(await _orderService.CreateOrderAsync(schema))
+				{
+					return Created("", null);
+				}
+
+				return Problem();
+			}
+
+			return BadRequest();
+		}
+
 		[HttpPost("/Review")]
 		[Authorize]
 		public async Task<IActionResult> PostReview(OrderReviewSchema schema)

@@ -15,4 +15,7 @@ public class OrderDto
 	public string? CustomerComment { get; set; }
 
 	public int? PromoCodeId { get; set; }
+
+
+	public ICollection<OrderDetailsDto> OrderDetails { get; set; } = new List<OrderDetailsDto>();
 }
