@@ -50,7 +50,7 @@ public class AuthService
 					new Claim(ClaimTypes.Name, identityUser.Email!)
 				});
 
-				return _jwtService.Generate(claimsIdentity, DateTime.Now.AddHours(1));
+				return _jwtService.Generate(claimsIdentity, DateTime.Now.AddDays(1));
 			}
 		}
 
