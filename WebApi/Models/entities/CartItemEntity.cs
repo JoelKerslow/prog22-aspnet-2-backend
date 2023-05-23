@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WebApi.Models.Dtos;
 
 namespace WebApi.Models.Entities
 {
@@ -18,5 +19,18 @@ namespace WebApi.Models.Entities
 
 		[Required]
 		public int Quantity { get; set; }
+
+
+		public static implicit operator CartItemDto(CartItemEntity entity)
+		{
+			return new CartItemDto
+			{
+				Id = entity.Id,
+				CartId = entity.CartId,
+				ProductId = entity.ProductId,
+				Quantity = entity.Quantity,
+				Product = entity.Product
+			};
+		}
 	}
 }

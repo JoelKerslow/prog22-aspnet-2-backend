@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Contexts;
 
@@ -11,9 +12,11 @@ using WebApi.Contexts;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230523091048_Cart changes again")]
+    partial class Cartchangesagain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,9 +149,6 @@ namespace WebApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CartEntityId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CartId")
                         .HasColumnType("int");
 
@@ -160,7 +160,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CartEntityId");
+                    b.HasIndex("CartId");
 
                     b.HasIndex("ProductId");
 
@@ -562,15 +562,19 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Models.Entities.CartItemEntity", b =>
                 {
-                    b.HasOne("WebApi.Models.Entities.CartEntity", null)
+                    b.HasOne("WebApi.Models.Entities.CartEntity", "Cart")
                         .WithMany("CartItems")
-                        .HasForeignKey("CartEntityId");
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("WebApi.Models.Entities.ProductEntity", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Cart");
 
                     b.Navigation("Product");
                 });

@@ -55,12 +55,19 @@ namespace WebApi.Helpers.Services
 					return null!;
 				}
 				else
-					return cart;
+				{
+					CartDto cartDto = cart;
+					foreach(var item in cart.CartItems)
+					{
+						cartDto.CartItems.Add(item);
+					}
+					return cartDto;
+				}
 			}
 			return null!;
 		}
 
-		public async Task<CartItemEntity> AddCartItemAsync(string token, CartItemSchema schema)
+		public async Task<CartItemDto> AddCartItemAsync(string token, CartItemSchema schema)
 		{
 			var cart = await GetUserCartAsync(token);
 			var product = await _productRepo.GetAsync(x => x.Id == schema.ProductId);
@@ -123,7 +130,7 @@ namespace WebApi.Helpers.Services
 			var productId = cart.CartItems.First().ProductId;
 			var product = await _productRepo.GetAsync(x => x.Id == productId);
 			var totalPrice = cart.CartItems.Sum(x => x.Quantity * product.Price);
-			
+
 			if (!string.IsNullOrWhiteSpace(code))
 			{
 				var promoCode = await _promoCodeService.ValidatePromoCode(code);

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Contexts;
 
@@ -11,9 +12,11 @@ using WebApi.Contexts;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230523095628_Cart removal")]
+    partial class Cartremoval
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,64 +110,6 @@ namespace WebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Campaigns");
-                });
-
-            modelBuilder.Entity("WebApi.Models.Entities.CartEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CustomerProfileId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("PromoCodeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerProfileId");
-
-                    b.HasIndex("PromoCodeId");
-
-                    b.ToTable("Carts");
-                });
-
-            modelBuilder.Entity("WebApi.Models.Entities.CartItemEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CartEntityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CartEntityId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.CategoryEntity", b =>
@@ -543,38 +488,6 @@ namespace WebApi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebApi.Models.Entities.CartEntity", b =>
-                {
-                    b.HasOne("WebApi.Models.Entities.CustomerProfileEntity", "CustomerProfile")
-                        .WithMany()
-                        .HasForeignKey("CustomerProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WebApi.Models.Entities.PromoCodeEntity", "PromoCode")
-                        .WithMany()
-                        .HasForeignKey("PromoCodeId");
-
-                    b.Navigation("CustomerProfile");
-
-                    b.Navigation("PromoCode");
-                });
-
-            modelBuilder.Entity("WebApi.Models.Entities.CartItemEntity", b =>
-                {
-                    b.HasOne("WebApi.Models.Entities.CartEntity", null)
-                        .WithMany("CartItems")
-                        .HasForeignKey("CartEntityId");
-
-                    b.HasOne("WebApi.Models.Entities.ProductEntity", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("WebApi.Models.Entities.OrderEntity", b =>
                 {
                     b.HasOne("WebApi.Models.Entities.CustomerProfileEntity", "Customer")
@@ -688,11 +601,6 @@ namespace WebApi.Migrations
             modelBuilder.Entity("WebApi.Models.Entities.CampaignEntity", b =>
                 {
                     b.Navigation("CampaignProducts");
-                });
-
-            modelBuilder.Entity("WebApi.Models.Entities.CartEntity", b =>
-                {
-                    b.Navigation("CartItems");
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.ProductEntity", b =>

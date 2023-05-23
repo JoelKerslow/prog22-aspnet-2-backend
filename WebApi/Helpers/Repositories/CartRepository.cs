@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using WebApi.Contexts;
 using WebApi.Helpers.Repositories.BaseRepositories;
+using WebApi.Models.Dtos;
 using WebApi.Models.Entities;
 
 namespace WebApi.Helpers.Repositories
@@ -18,7 +19,7 @@ namespace WebApi.Helpers.Repositories
 
 		public override async Task<CartEntity> GetAsync(Expression<Func<CartEntity, bool>> predicate)
 		{
-			var entity = await _context.Carts.Include(x => x.CartItems).FirstOrDefaultAsync(predicate);
+			var entity = await _context.Carts.Include(x => x.CartItems).ThenInclude(x => x.Product).FirstOrDefaultAsync(predicate);
 
 			if (entity != null)
 				return entity;

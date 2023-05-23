@@ -11,7 +11,7 @@ namespace WebApi.Models.Dtos
 		public int? PromoCodeId { get; set; }
 		public bool IsActive { get; set; }
 		public decimal TotalPrice { get; set; }
-		public ICollection<CartItemEntity> CartItems { get; set; } = new HashSet<CartItemEntity>();
+		public ICollection<CartItemDto> CartItems { get; set; } = new List<CartItemDto>();
 
 		public static implicit operator CartDto(CartEntity entity)
 		{
@@ -22,8 +22,7 @@ namespace WebApi.Models.Dtos
 				PromoCodeId = entity.PromoCodeId,
 				PromoCode = entity.PromoCode,
 				IsActive = entity.IsActive,
-				TotalPrice = entity.TotalPrice,
-				CartItems = entity.CartItems
+				TotalPrice = entity.TotalPrice
 			};
 		}
 
