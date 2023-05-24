@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using WebApi.Models.Entities;
+﻿using WebApi.Models.Entities;
 
 namespace WebApi.Models.Dtos
 {
@@ -10,7 +9,9 @@ namespace WebApi.Models.Dtos
 		public PromoCodeEntity? PromoCode { get; set; }
 		public int? PromoCodeId { get; set; }
 		public bool IsActive { get; set; }
-		public decimal TotalPrice { get; set; }
+		public decimal TotalAmountWithoutDiscount { get; set; }
+		public decimal DiscountAmount { get; set; }
+		public decimal TotalAmountWithDiscount { get; set; }
 		public ICollection<CartItemDto> CartItems { get; set; } = new List<CartItemDto>();
 
 		public static implicit operator CartDto(CartEntity entity)
@@ -22,23 +23,23 @@ namespace WebApi.Models.Dtos
 				PromoCodeId = entity.PromoCodeId,
 				PromoCode = entity.PromoCode,
 				IsActive = entity.IsActive,
-				TotalPrice = entity.TotalPrice
+				TotalAmountWithoutDiscount = entity.TotalAmountWithoutDiscount,
+				DiscountAmount = entity.DiscountAmount,
+				TotalAmountWithDiscount = entity.TotalAmountWithDiscount
 			};
 		}
 
 		public static implicit operator CartEntity(CartDto dto)
 		{
-			return new CartDto
+			return new CartEntity
 			{
 				Id = dto.Id,
-				CustomerId = dto.CustomerId,
 				PromoCodeId = dto.PromoCodeId,
 				PromoCode = dto.PromoCode,
 				IsActive = dto.IsActive,
-				TotalPrice = dto.TotalPrice,
-				CartItems = dto.CartItems
+				CartItems = dto.CartItems.Select(x => (CartItemEntity)x).ToList(),
+				CustomerProfileId = dto.CustomerId
 			};
-
 		}
 	}
 }

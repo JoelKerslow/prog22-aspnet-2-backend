@@ -2,7 +2,6 @@
 using System.Linq.Expressions;
 using WebApi.Contexts;
 using WebApi.Helpers.Repositories.BaseRepositories;
-using WebApi.Models.Dtos;
 using WebApi.Models.Entities;
 
 namespace WebApi.Helpers.Repositories
@@ -17,14 +16,13 @@ namespace WebApi.Helpers.Repositories
 			_context = context;
 		}
 
-		public override async Task<CartEntity> GetAsync(Expression<Func<CartEntity, bool>> predicate)
+		public override Task<CartEntity> GetAsync(Expression<Func<CartEntity, bool>> predicate)
 		{
-			var entity = await _context.Carts.Include(x => x.CartItems).ThenInclude(x => x.Product).FirstOrDefaultAsync(predicate);
-
-			if (entity != null)
-				return entity;
-
-			return null!;
+			return _context.Carts
+				.Include(x => x.PromoCode)
+				.Include(x => x.CartItems)
+				.ThenInclude(x => x.Product)
+				.FirstAsync(predicate);
 		}
 
 		public async Task<CartItemEntity?> GetCartItem(int cartId, int productId)
@@ -32,44 +30,33 @@ namespace WebApi.Helpers.Repositories
 			return await _context.CartItems.FirstOrDefaultAsync(x => x.CartId == cartId && x.ProductId == productId);
 		}
 
-		public async Task<CartItemEntity> AddCartItemAsync(CartItemEntity entity)
+		public async Task AddCartItemAsync(CartItemEntity entity)
 		{
 			_context.Add(entity);
 			await _context.SaveChangesAsync();
-			if (entity != null)
-				return entity;
-			return null!;
 		}
 
-		public async Task<CartItemEntity> UpdateCartItem(CartItemEntity entity)
+		public async Task UpdateCartItem(CartItemEntity entity)
 		{
 			_context.Update(entity);
 			await _context.SaveChangesAsync();
-			if (entity != null)
-				return entity;
-			return null!;
 		}
 
-
-		public async Task<CartItemEntity> DeleteCartItem(CartItemEntity entity)
+		public async Task DeleteCartItem(int cartId, int productId)
 		{
-			var cartItem = await GetCartItem(entity.CartId, entity.ProductId);
+			var cartItem = await GetCartItem(cartId, productId);
 
 			if (cartItem != null)
 			{
 				_context.CartItems.Remove(cartItem);
 				await _context.SaveChangesAsync();
 			}
-
-			if (entity != null)
-				return entity;
-			return null!;
 		}
-
-		public async Task<CartEntity> DeleteCartItems(CartEntity entity)
+		
+		public async Task DeleteCartItems(int cartId)
 		{
 			var cartItems = await _context.CartItems
-				.Where(x => x.CartId == entity.Id)
+				.Where(x => x.CartId == cartId)
 				.ToListAsync();
 
 			foreach (var cartItem in cartItems)
@@ -78,10 +65,6 @@ namespace WebApi.Helpers.Repositories
 			}
 
 			await _context.SaveChangesAsync();
-
-			if (entity != null)
-				return entity;
-			return null!;
 		}
 	}
 }

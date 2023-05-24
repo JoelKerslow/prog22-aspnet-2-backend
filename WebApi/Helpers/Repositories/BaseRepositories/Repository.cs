@@ -6,13 +6,12 @@ namespace WebApi.Helpers.Repositories.BaseRepositories
 {
 	public abstract class Repository<TEntity> where TEntity : class
 	{
-		DataContext _context;
+		readonly DataContext _context;
 
 		public Repository(DataContext context)
 		{
 			_context = context;
 		}
-
 
 		public virtual async Task<TEntity> AddAsync(TEntity entity)
 		{
@@ -46,6 +45,18 @@ namespace WebApi.Helpers.Repositories.BaseRepositories
 		{
 			_context.Set<TEntity>().Update(entity);
 			await _context.SaveChangesAsync();
+
+			return entity;
+		}
+
+		public virtual async Task<TEntity> UpdateByIdAsync(int id, TEntity entity)
+		{
+			TEntity? local = await _context.Set<TEntity>().FindAsync(id);
+			if (local is not null) _context.Entry(local).State = EntityState.Detached;
+
+			_context.Entry(entity).State = EntityState.Modified;
+			_context.SaveChanges();
+
 			return entity;
 		}
 

@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace WebApi.Models.Entities;
 
@@ -23,9 +22,14 @@ public class CartEntity
 	public bool IsActive { get; set; }
 
 	[NotMapped]
-	public decimal TotalPrice { get; set; }
+	public decimal TotalAmountWithoutDiscount => CartItems.Sum(x => x.Quantity * x.Product.Price);
 
-	[JsonIgnore]
+	[NotMapped]
+	public decimal DiscountAmount => PromoCode is null ? 0 : TotalAmountWithoutDiscount * PromoCode.Discount / 100;
+
+	[NotMapped]
+	public decimal TotalAmountWithDiscount => TotalAmountWithoutDiscount - DiscountAmount;
+
 	public ICollection<CartItemEntity> CartItems { get; set; } = new HashSet<CartItemEntity>();
 }
 

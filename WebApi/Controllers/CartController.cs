@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Helpers.Services;
-
 using WebApi.Models.Schemas;
 
 namespace WebApi.Controllers
@@ -21,25 +20,13 @@ namespace WebApi.Controllers
 		[Authorize]
 		public async Task<IActionResult> GetCart()
 		{
-				var cart = await _cartService.GetUserCartAsync(GetBearerToken());
+			var cart = await _cartService.GetUserCartAsync(GetBearerToken());
 
-				if (cart == null)
-				{
-					return NotFound();
-				}
-				return Ok(cart);
-		}
-
-		[HttpPost("Create")]
-		[Authorize]
-		public async Task<IActionResult> Create(CartSchema schema)
-		{
-			if (ModelState.IsValid)
+			if (cart == null)
 			{
-				var cart = await _cartService.CreateCartAsync(GetBearerToken(), schema);
-				return Created("", cart);
+				return NotFound();
 			}
-			return BadRequest();
+			return Ok(cart);
 		}
 
 		[HttpPost("Item/Create")]
@@ -49,8 +36,8 @@ namespace WebApi.Controllers
 			await _cartService.GetUserCartAsync(GetBearerToken());
 			if (ModelState.IsValid)
 			{
-				var cart = await _cartService.AddCartItemAsync(GetBearerToken(), schema);
-				return Created("", cart);
+				var cartItem = await _cartService.AddCartItemAsync(GetBearerToken(), schema);
+				return Created("", cartItem);
 			}
 			return BadRequest();
 		}
@@ -61,8 +48,8 @@ namespace WebApi.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				var result = await _cartService.UpdateCartItemAsync(GetBearerToken(), schema);
-				return Created("", result);
+				await _cartService.UpdateCartItemAsync(GetBearerToken(), schema);
+				return Ok();
 			}
 			return BadRequest();
 		}
@@ -71,20 +58,24 @@ namespace WebApi.Controllers
 		[Authorize]
 		public async Task<IActionResult> DeleteCartItem(int productId)
 		{
-			return Ok(await _cartService.DeleteCartItemAsync(GetBearerToken(), productId));
+			await _cartService.DeleteCartItemAsync(GetBearerToken(), productId);
+			return NoContent();
 		}
 
 		[HttpDelete("Items/Delete")]
 		[Authorize]
 		public async Task<IActionResult> DeleteCartItems()
 		{
-			return Ok(await _cartService.DeleteCartItemsAsync(GetBearerToken()));
+			await _cartService.DeleteCartItemsAsync(GetBearerToken());
+			return NoContent();
 		}
 
-		[HttpGet("Checkout")]
-		public async Task<IActionResult> CalculatePrice(string? promoCode)
-		{ 
-			return Ok(await _cartService.CalculatePriceAsync(GetBearerToken(), promoCode!));
+		[HttpPut("Apply/PromoCode")]
+		[Authorize]
+		public async Task<IActionResult> ApplyPromoCode(string? promoCode)
+		{
+			await _cartService.ApplyPromoCodeAsync(GetBearerToken(), promoCode!);
+			return Ok();
 		}
 
 		private string GetBearerToken()

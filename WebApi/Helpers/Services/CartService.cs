@@ -12,7 +12,7 @@ namespace WebApi.Helpers.Services
 		private readonly ProductRepository _productRepo;
 		private readonly CustomerProfileService _customerProfileService;
 		private readonly PromoCodeService _promoCodeService;
-		JwtService _jwtService;
+		private readonly JwtService _jwtService;
 
 		public CartService(CartRepository cartRepo,ProductRepository productRepo,CustomerProfileService customerProfileService,JwtService jwtService, PromoCodeService promoCodeService)
 		{
@@ -23,48 +23,50 @@ namespace WebApi.Helpers.Services
 			_jwtService = jwtService;
 		}
 
-		public async Task<CartEntity> CreateCartAsync(string token, CartSchema schema)
+		public async Task<CartDto> CreateCartAsync(string token)
 		{
 			var userId = _jwtService.GetIdFromToken(token);
-
-			CartEntity entity = schema;
 			var customerProfile = await _customerProfileService.GetCustomerProfile(token);
-			entity.CustomerProfileId = customerProfile.Id;
-			entity.CreatedAt = DateTime.Now;
+			var existingCart = await _cartRepo.GetAsync(x => x.CustomerProfile.UserId == userId);
 
-			var cart = await _cartRepo.GetAsync(x => x.CustomerProfile.UserId == userId);
-
-			if (cart == null)
+			if (existingCart != null)
 			{
-				return await _cartRepo.AddAsync(entity);
+				return existingCart;
 			}
-			return cart;
+
+			var cart = new CartEntity
+			{
+				CustomerProfileId = customerProfile.Id,
+				CreatedAt = DateTime.Now,
+				IsActive = true
+			};
+
+			return await _cartRepo.AddAsync(cart);
 		}
 
 		public async Task<CartDto> GetUserCartAsync(string token)
 		{
 			var userId = _jwtService.GetIdFromToken(token);
 			var customerProfile = await _customerProfileService.GetCustomerProfile(token);
-			var cart = await _cartRepo.GetAsync(x => x.CustomerProfileId == customerProfile.Id);
+			var cart = await _cartRepo.GetAsync(x => x.CustomerProfile.UserId == userId);
 
-			if (cart != null)
+			if (cart == null)
 			{
-				if (!cart.IsActive)
-				{
-					await _cartRepo.RemoveAsync(cart);
-					return null!;
-				}
-				else
-				{
-					CartDto cartDto = cart;
-					foreach(var item in cart.CartItems)
-					{
-						cartDto.CartItems.Add(item);
-					}
-					return cartDto;
-				}
+				return await CreateCartAsync(token);
 			}
-			return null!;
+
+			if (!cart.IsActive)
+			{
+				await _cartRepo.RemoveAsync(cart);
+				return null!;
+			}
+
+			CartDto cartDto = cart;
+			foreach (var item in cart.CartItems)
+			{
+				cartDto.CartItems.Add(item);
+			}
+			return cartDto;
 		}
 
 		public async Task<CartItemDto> AddCartItemAsync(string token, CartItemSchema schema)
@@ -75,76 +77,67 @@ namespace WebApi.Helpers.Services
 
 			if (cartItem == null)
 			{
-				schema.CartId = cart.Id;
-				schema.ProductId = product.Id;
-				schema.Quantity = 1;
+				cartItem = schema;
+				cartItem.CartId = cart.Id;
+				cartItem.ProductId = product.Id;
+				cartItem.Quantity = 1;
+
+				await _cartRepo.AddCartItemAsync(cartItem);
 			}
 			else
-				schema.Quantity = cartItem.Quantity;
-			return await _cartRepo.AddCartItemAsync(schema);
+			{
+				cartItem.Quantity += 1;
+
+				await _cartRepo.UpdateCartItem(cartItem);
+			}
+
+			return cartItem;
 		}
 
-		public async Task<CartItemDto> UpdateCartItemAsync(string token, CartItemSchema schema)
+		public async Task UpdateCartItemAsync(string token, CartItemSchema schema)
 		{
 			var cart = await GetUserCartAsync(token);
-			schema.CartId = cart.Id;
 
-			var cartItem = await _cartRepo.GetCartItem(schema.CartId, schema.ProductId) ?? throw new Exception("Cart item not found");
+			var cartItem = await _cartRepo.GetCartItem(cart.Id, schema.ProductId) ?? throw new Exception("Cart item not found");
 			var product = await _productRepo.GetAsync(x => x.Id == schema.ProductId) ?? throw new Exception("Product not found");
 			if (product.Stock < schema.Quantity)
 			{
 				throw new Exception("Insufficient stock");
 			}
 			cartItem.Quantity = schema.Quantity;
-			return await _cartRepo.UpdateCartItem(cartItem);
+			await _cartRepo.UpdateCartItem(cartItem);
 		}
 
-		public async Task<CartItemDto> DeleteCartItemAsync(string token, int productId)
+		public async Task DeleteCartItemAsync(string token, int productId)
 		{
 			var cart = await GetUserCartAsync(token);
-			CartItemEntity entity = new()
-			{
-				CartId = cart.Id,
-				ProductId = productId
-			};
-			return await _cartRepo.DeleteCartItem(entity);
+			await _cartRepo.DeleteCartItem(cart.Id, productId);
 		}
 
-		public async Task<CartDto> DeleteCartItemsAsync(string token)
+		public async Task DeleteCartItemsAsync(string token)
 		{
 			var cart = await GetUserCartAsync(token);
-			CartEntity entity = new()
-			{
-				Id = cart.Id
-			};
-			return await _cartRepo.DeleteCartItems(entity);
+			await _cartRepo.DeleteCartItems(cart.Id);
 		}
 
-		public async Task<decimal> CalculatePriceAsync(string token, string code)
+		public async Task ApplyPromoCodeAsync(string token, string code)
 		{
 			var cart = await GetUserCartAsync(token);
 			if (cart.CartItems.Count == 0)
 			{
 				throw new Exception("No products in the cart");
 			}
-			var productId = cart.CartItems.First().ProductId;
-			var product = await _productRepo.GetAsync(x => x.Id == productId);
-			var totalPrice = cart.CartItems.Sum(x => x.Quantity * product.Price);
-
-			if (!string.IsNullOrWhiteSpace(code))
+			var promoCode = await _promoCodeService.ValidatePromoCode(code);
+			if (promoCode != null)
 			{
-				var promoCode = await _promoCodeService.ValidatePromoCode(code);
-				if (promoCode != null)
-				{
-					cart.PromoCodeId = promoCode.Id;
-					cart.PromoCode = promoCode;
-					totalPrice *= (100m - promoCode.Discount) / 100m;
-				}
-				else
-					throw new Exception("Invalid promo code");
+				cart.PromoCodeId = promoCode.Id;
+				cart.PromoCode = promoCode;
+				await _cartRepo.UpdateByIdAsync(cart.Id, cart);
 			}
-			cart.TotalPrice = totalPrice;
-			return totalPrice;
+			else
+			{
+				throw new Exception("Invalid promo code");
+			}
 		}
 	}
 }

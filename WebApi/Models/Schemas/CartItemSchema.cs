@@ -6,9 +6,6 @@ namespace WebApi.Models.Schemas
 	public class CartItemSchema
 	{
 		[Required]
-		public int CartId { get; set; }
-
-		[Required]
 		public int ProductId { get; set; }
 
 		[Required]
@@ -19,7 +16,6 @@ namespace WebApi.Models.Schemas
 		{
 			return new CartItemEntity
 			{
-				CartId = schema.CartId,
 				ProductId = schema.ProductId,
 				Quantity = schema.Quantity
 			};

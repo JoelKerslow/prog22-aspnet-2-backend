@@ -68,5 +68,22 @@ namespace WebApi.Models.Entities
 				CreatedAt = entity.CreatedAt
 			};
 		}
+
+		public static implicit operator ProductEntity(ProductDto dto)
+		{
+			return new ProductEntity
+			{
+				Id = dto.Id,
+				Name = dto.Name,
+				Description = dto.Description,
+				Brand = dto.Brand,
+				Price = dto.Price,
+				Color = dto.Color,
+				Size = dto.Size,
+				ImageUrl = dto.ImageUrl,
+				Stock = dto.Stock,
+				CreatedAt = dto.CreatedAt
+			};
+		}
 	}
 }
