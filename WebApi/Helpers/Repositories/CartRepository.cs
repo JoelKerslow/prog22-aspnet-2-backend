@@ -16,13 +16,18 @@ namespace WebApi.Helpers.Repositories
 			_context = context;
 		}
 
-		public override Task<CartEntity> GetAsync(Expression<Func<CartEntity, bool>> predicate)
+		public override async Task<CartEntity> GetAsync(Expression<Func<CartEntity, bool>> predicate)
 		{
-			return _context.Carts
+			var entity = await _context.Carts
 				.Include(x => x.PromoCode)
 				.Include(x => x.CartItems)
 				.ThenInclude(x => x.Product)
-				.FirstAsync(predicate);
+				.FirstOrDefaultAsync(predicate);
+
+			if (entity != null)
+				return entity;
+
+			return null!;
 		}
 
 		public async Task<CartItemEntity?> GetCartItem(int cartId, int productId)
