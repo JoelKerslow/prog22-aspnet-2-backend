@@ -21,6 +21,8 @@ public class AddressEntity
     [Required]
     public string Country { get; set; } = null!;
 
-
-    public ICollection<CustomerProfileEntity> Customers { get; set; } = new HashSet<CustomerProfileEntity>();
+    [Required]
+    public int customerProfileId { get; set; }
+    [Required]
+    public CustomerProfileEntity CustomerProfile { get; set; } = null!;
 }

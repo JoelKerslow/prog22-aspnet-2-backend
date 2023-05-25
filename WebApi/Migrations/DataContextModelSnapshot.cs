@@ -34,7 +34,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("CustomersId");
 
-                    b.ToTable("AddressEntityCustomerProfileEntity");
+                    b.ToTable("AddressEntityCustomerProfileEntity", (string)null);
                 });
 
             modelBuilder.Entity("CustomerProfileEntityPromoCodeEntity", b =>
@@ -49,7 +49,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("PromoCodesId");
 
-                    b.ToTable("CustomerProfileEntityPromoCodeEntity");
+                    b.ToTable("CustomerProfileEntityPromoCodeEntity", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.AddressEntity", b =>
@@ -80,7 +80,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.CampaignEntity", b =>
@@ -106,7 +106,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Campaigns");
+                    b.ToTable("Campaigns", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.CartEntity", b =>
@@ -135,7 +135,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("PromoCodeId");
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.CartItemEntity", b =>
@@ -161,7 +161,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartItems");
+                    b.ToTable("CartItems", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.CategoryEntity", b =>
@@ -178,7 +178,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.CustomerProfileEntity", b =>
@@ -210,7 +210,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CustomerProfiles");
+                    b.ToTable("CustomerProfiles", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.DepartmentEntity", b =>
@@ -227,7 +227,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.OrderEntity", b =>
@@ -263,7 +263,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("PromoCodeId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.OrderReviewEntity", b =>
@@ -287,7 +287,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderReviews");
+                    b.ToTable("OrderReviews", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.ProductEntity", b =>
@@ -353,7 +353,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.ProductReviewEntity", b =>
@@ -385,7 +385,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductReviews");
+                    b.ToTable("ProductReviews", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.PromoCodeEntity", b =>
@@ -424,7 +424,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PromoCodes");
+                    b.ToTable("PromoCodes", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.ShowcaseEntity", b =>
@@ -449,7 +449,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Showcases");
+                    b.ToTable("Showcases", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.TagEntity", b =>
@@ -466,7 +466,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.Entities.WishlistEntity", b =>
@@ -484,7 +484,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("CustomerProfileId");
 
-                    b.ToTable("Wishlists");
+                    b.ToTable("Wishlists", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.entities.OrderDetailsEntity", b =>
@@ -502,7 +502,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrdersDetails");
+                    b.ToTable("OrdersDetails", (string)null);
                 });
 
             modelBuilder.Entity("WebApi.Models.entities.WishlistItemEntity", b =>
@@ -525,7 +525,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("WishlistId");
 
-                    b.ToTable("WishlistItems");
+                    b.ToTable("WishlistItems", (string)null);
                 });
 
             modelBuilder.Entity("AddressEntityCustomerProfileEntity", b =>
