@@ -33,13 +33,19 @@ namespace WebApi.Controllers
 		[Authorize]
 		public async Task<IActionResult> CreateItem(CartItemSchema schema)
 		{
-			await _cartService.GetUserCartAsync(GetBearerToken());
-			if (ModelState.IsValid)
+			try
 			{
-				var cartItem = await _cartService.AddCartItemAsync(GetBearerToken(), schema);
-				return Created("", cartItem);
+				await _cartService.GetUserCartAsync(GetBearerToken());
+
+				if (ModelState.IsValid)
+				{
+					var cartItem = await _cartService.AddCartItemAsync(GetBearerToken(), schema);
+					return Created("", cartItem);
+				}
+
+				return BadRequest();
 			}
-			return BadRequest();
+			catch (Exception ex) { return Problem(ex.InnerException?.Message ?? ex.Message); }
 		}
 
 		[HttpPut("Item/Update")]
