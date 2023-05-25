@@ -82,7 +82,7 @@ namespace WebApi.Models.Entities
 				Size = dto.Size,
 				ImageUrl = dto.ImageUrl,
 				Stock = dto.Stock,
-				CreatedAt = dto.CreatedAt
+				CreatedAt = dto.CreatedAt,
 			};
 		}
 	}

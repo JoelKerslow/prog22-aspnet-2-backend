@@ -25,7 +25,8 @@ namespace WebApi.Models.Dtos
 				IsActive = entity.IsActive,
 				TotalAmountWithoutDiscount = entity.TotalAmountWithoutDiscount,
 				DiscountAmount = entity.DiscountAmount,
-				TotalAmountWithDiscount = entity.TotalAmountWithDiscount
+				TotalAmountWithDiscount = entity.TotalAmountWithDiscount,
+				CartItems = entity.CartItems.Select(x => (CartItemDto)x).ToList()
 			};
 		}
 
@@ -34,11 +35,11 @@ namespace WebApi.Models.Dtos
 			return new CartEntity
 			{
 				Id = dto.Id,
+				CustomerProfileId = dto.CustomerId,
 				PromoCodeId = dto.PromoCodeId,
 				PromoCode = dto.PromoCode,
 				IsActive = dto.IsActive,
-				CartItems = dto.CartItems.Select(x => (CartItemEntity)x).ToList(),
-				CustomerProfileId = dto.CustomerId
+				CartItems = dto.CartItems.Select(x => (CartItemEntity)x).ToList()
 			};
 		}
 	}

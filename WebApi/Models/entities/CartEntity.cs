@@ -30,6 +30,6 @@ public class CartEntity
 	[NotMapped]
 	public decimal TotalAmountWithDiscount => TotalAmountWithoutDiscount - DiscountAmount;
 
-	public ICollection<CartItemEntity> CartItems { get; set; } = new HashSet<CartItemEntity>();
+	public ICollection<CartItemEntity> CartItems { get; set; } = new List<CartItemEntity>();
 }
 
