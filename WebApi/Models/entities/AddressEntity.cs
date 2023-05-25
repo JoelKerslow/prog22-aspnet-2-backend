@@ -8,6 +8,9 @@ public class AddressEntity
     public int Id { get; set; }
 
     [Required]
+    public string Title { get; set; } = null!;
+
+    [Required]
     public string Addressline1 { get; set; } = null!; 
 
     public string? Addressline2 { get; set; }
