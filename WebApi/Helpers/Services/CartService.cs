@@ -23,50 +23,24 @@ namespace WebApi.Helpers.Services
 			_jwtService = jwtService;
 		}
 
-		public async Task<CartDto> CreateCartAsync(string token)
-		{
-			var userId = _jwtService.GetIdFromToken(token);
-			var customerProfile = await _customerProfileService.GetCustomerProfile(token);
-			var existingCart = await _cartRepo.GetAsync(x => x.CustomerProfile.UserId == userId);
-
-			if (existingCart != null)
-			{
-				return existingCart;
-			}
-
-			var cart = new CartEntity
-			{
-				CustomerProfileId = customerProfile.Id,
-				CreatedAt = DateTime.Now,
-				IsActive = true
-			};
-
-			return await _cartRepo.AddAsync(cart);
-		}
-
 		public async Task<CartDto> GetUserCartAsync(string token)
 		{
-			var userId = _jwtService.GetIdFromToken(token);
+			//var userId = _jwtService.GetIdFromToken(token);
 			var customerProfile = await _customerProfileService.GetCustomerProfile(token);
-			var cart = await _cartRepo.GetAsync(x => x.CustomerProfile.UserId == userId);
+			var cart = await _cartRepo.GetAsync(x => x.CustomerProfile.UserId == customerProfile.UserId);
 
 			if (cart == null)
 			{
-				return await CreateCartAsync(token);
+				var newCart = new CartEntity
+				{
+					CustomerProfileId = customerProfile.Id,
+					CreatedAt = DateTime.Now,
+					IsActive = true
+				};
+				return await _cartRepo.AddAsync(newCart);
 			}
 
-			if (!cart.IsActive)
-			{
-				await _cartRepo.RemoveAsync(cart);
-				return null!;
-			}
-
-			CartDto cartDto = cart;
-			foreach (var item in cart.CartItems)
-			{
-				cartDto.CartItems.Add(item);
-			}
-			return cartDto;
+			return cart;
 		}
 
 		public async Task<CartItemDto> AddCartItemAsync(string token, CartItemSchema schema)
@@ -94,7 +68,7 @@ namespace WebApi.Helpers.Services
 			return cartItem;
 		}
 
-		public async Task UpdateCartItemAsync(string token, CartItemSchema schema)
+		public async Task UpdateCartItemAsync(string token, UpdateCartItemSchema schema)
 		{
 			var cart = await GetUserCartAsync(token);
 
