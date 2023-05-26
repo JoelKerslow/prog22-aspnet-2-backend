@@ -11,6 +11,7 @@ namespace WebApi.Models.Dtos
         public string? Addressline2 { get; set; }
         public int PostalCode { get; set; }
         public string City { get; set; } = null!;
+        public string Icon { get; set; } = null!;
         public string Country { get; set; } = null!;
         public int CustomerProfileId { get; set; }
     }

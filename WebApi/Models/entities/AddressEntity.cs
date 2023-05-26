@@ -24,6 +24,9 @@ public class AddressEntity
 
     [Required]
     public string Country { get; set; } = null!;
+    
+    [Required]
+    public string Icon { get; set; } = null!;
 
     [Required]
     public int CustomerProfileId { get; set; }
@@ -41,6 +44,7 @@ public class AddressEntity
             PostalCode = entity.PostalCode,
             City = entity.City,
             Country = entity.Country,
+            Icon = entity.Icon,
             CustomerProfileId = entity.CustomerProfileId,
         };
     }

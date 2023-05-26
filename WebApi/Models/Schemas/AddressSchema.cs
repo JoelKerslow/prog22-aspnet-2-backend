@@ -3,11 +3,8 @@ using WebApi.Models.Entities;
 
 namespace WebApi.Models.Schemas
 {
-    public class AddressUpdateSchema
+    public class AddressSchema
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         public string Title { get; set; } = null!;
 
@@ -31,11 +28,10 @@ namespace WebApi.Models.Schemas
         [Required]
         public int CustomerProfileId { get; set; }
 
-        public static implicit operator AddressEntity(AddressUpdateSchema schema)
+        public static implicit operator AddressEntity(AddressSchema schema)
         {
             return new AddressEntity()
             {
-                Id = schema.Id,
                 Title = schema.Title,
                 Addressline1 = schema.Addressline1,
                 Addressline2 = schema.Addressline2,
