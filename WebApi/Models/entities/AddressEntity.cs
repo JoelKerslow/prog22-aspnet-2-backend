@@ -25,7 +25,12 @@ public class AddressEntity
     public string Country { get; set; } = null!;
 
     [Required]
+    public string Icon { get; set; } = null!;
+    
+    [Required]
     public int CustomerProfileId { get; set; }
+
     [Required]
     public CustomerProfileEntity CustomerProfile { get; set; } = null!;
+
 }
