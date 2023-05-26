@@ -25,7 +25,7 @@ public class AddressEntity
     public string Country { get; set; } = null!;
 
     [Required]
-    public int customerProfileId { get; set; }
+    public int CustomerProfileId { get; set; }
     [Required]
     public CustomerProfileEntity CustomerProfile { get; set; } = null!;
 }

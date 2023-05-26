@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Contexts;
 
@@ -11,9 +12,11 @@ using WebApi.Contexts;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230525110726_AddressEntityUpdate")]
+    partial class AddressEntityUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,9 +63,6 @@ namespace WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CustomerProfileId")
-                        .HasColumnType("int");
-
                     b.Property<int>("PostalCode")
                         .HasColumnType("int");
 
@@ -70,9 +70,12 @@ namespace WebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("customerProfileId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerProfileId");
+                    b.HasIndex("customerProfileId");
 
                     b.ToTable("Addresses");
                 });
@@ -541,7 +544,7 @@ namespace WebApi.Migrations
                 {
                     b.HasOne("WebApi.Models.Entities.CustomerProfileEntity", "CustomerProfile")
                         .WithMany("Addresses")
-                        .HasForeignKey("CustomerProfileId")
+                        .HasForeignKey("customerProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
