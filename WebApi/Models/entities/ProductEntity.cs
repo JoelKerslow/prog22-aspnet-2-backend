@@ -66,7 +66,9 @@ namespace WebApi.Models.Entities
 				Size = entity.Size,
 				ImageUrl = entity.ImageUrl,
 				Stock = entity.Stock,
-				CreatedAt = entity.CreatedAt
+				CreatedAt = entity.CreatedAt,
+				Reviews = entity.Reviews
+				
 			};
 		}
 
@@ -84,6 +86,7 @@ namespace WebApi.Models.Entities
 				ImageUrl = dto.ImageUrl,
 				Stock = dto.Stock,
 				CreatedAt = dto.CreatedAt,
+				Reviews = dto.Reviews
 			};
 		}
 	}

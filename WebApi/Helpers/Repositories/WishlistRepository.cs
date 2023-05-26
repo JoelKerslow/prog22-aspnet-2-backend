@@ -22,6 +22,7 @@ namespace WebApi.Helpers.Repositories
 			var entity = await _context.Wishlists
 				.Include(x => x.WishlistItems)
 				.ThenInclude(x => x.Product)
+				.ThenInclude(x => x.Reviews)
 				.FirstOrDefaultAsync(predicate);
 
 			if (entity != null)
