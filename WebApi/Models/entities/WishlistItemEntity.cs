@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using WebApi.Models.Entities;
 
 namespace WebApi.Models.entities
@@ -15,5 +16,11 @@ namespace WebApi.Models.entities
 		[Required]
 		public int ProductId { get; set; }
 		public ProductEntity Product { get; set; } = null!;
+
+		[NotMapped]
+		public int ReviewCount => Product.Reviews.Count;
+
+		[NotMapped]
+		public int RatingSum => Product.Reviews.Sum(x => x.Rating);
 	}
 }
