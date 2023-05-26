@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using WebApi.Models.Dtos;
 
 namespace WebApi.Models.Entities
@@ -48,7 +49,7 @@ namespace WebApi.Models.Entities
 
 		public DateTime? ModifiedAt { get; set; }
 
-
+		[JsonIgnore]
 		public ICollection<ProductReviewEntity> Reviews { get; set; } = new HashSet<ProductReviewEntity>();
 
 
