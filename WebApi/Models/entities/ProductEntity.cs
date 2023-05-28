@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using WebApi.Models.Dtos;
 
 namespace WebApi.Models.Entities
@@ -48,7 +49,7 @@ namespace WebApi.Models.Entities
 
 		public DateTime? ModifiedAt { get; set; }
 
-
+		[JsonIgnore]
 		public ICollection<ProductReviewEntity> Reviews { get; set; } = new HashSet<ProductReviewEntity>();
 
 
@@ -65,7 +66,9 @@ namespace WebApi.Models.Entities
 				Size = entity.Size,
 				ImageUrl = entity.ImageUrl,
 				Stock = entity.Stock,
-				CreatedAt = entity.CreatedAt
+				CreatedAt = entity.CreatedAt,
+				Reviews = entity.Reviews
+				
 			};
 		}
 
@@ -83,6 +86,7 @@ namespace WebApi.Models.Entities
 				ImageUrl = dto.ImageUrl,
 				Stock = dto.Stock,
 				CreatedAt = dto.CreatedAt,
+				Reviews = dto.Reviews
 			};
 		}
 	}
