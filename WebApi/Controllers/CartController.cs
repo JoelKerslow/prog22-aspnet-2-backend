@@ -46,7 +46,7 @@ namespace WebApi.Controllers
 
 		[HttpPut("Item/Update")]
 		[Authorize]
-		public async Task<IActionResult> UpdateCartItemQuantity(UpdateCartItemSchema schema)
+		public async Task<IActionResult> UpdateCartItemQuantity(CartItemSchema schema)
 		{
 			if (ModelState.IsValid)
 			{

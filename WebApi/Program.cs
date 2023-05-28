@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using System.Text.Json.Serialization;
 using WebApi.Contexts;
 using WebApi.Helpers.Filters;
 using WebApi.Helpers.Repositories;
@@ -39,6 +38,7 @@ builder.Services.AddScoped<PromoCodeRepository>();
 builder.Services.AddScoped<OrderRepository>();
 builder.Services.AddScoped<OrderDetailsRepository>();
 builder.Services.AddScoped<AddressRepository>();
+builder.Services.AddScoped<WishlistRepository>();
 
 
 #endregion
@@ -55,6 +55,8 @@ builder.Services.AddScoped<ProductReviewService>();
 builder.Services.AddScoped<CartService>();
 builder.Services.AddScoped<PromoCodeService>();
 builder.Services.AddScoped<AddressService>();
+builder.Services.AddScoped<WishlistService>();
+
 
 #endregion
 

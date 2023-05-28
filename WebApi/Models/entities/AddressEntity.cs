@@ -29,9 +29,14 @@ public class AddressEntity
     public string Icon { get; set; } = null!;
 
     [Required]
+    public string Icon { get; set; } = null!;
+    
+    [Required]
     public int CustomerProfileId { get; set; }
+
     [Required]
     public CustomerProfileEntity CustomerProfile { get; set; } = null!;
+
 
     public static implicit operator AddressDto(AddressEntity entity)
     {

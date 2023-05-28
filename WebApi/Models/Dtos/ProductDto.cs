@@ -1,4 +1,6 @@
-﻿namespace WebApi.Models.Dtos;
+﻿using WebApi.Models.Entities;
+
+namespace WebApi.Models.Dtos;
 
 public class ProductDto
 {
@@ -17,4 +19,5 @@ public class ProductDto
 	public string Tag { get; set; } = null!;
 	public int ReviewAverage { get; set; }
 	public int ReviewCount { get; set; }
+	public ICollection<ProductReviewEntity> Reviews { get; set; } = new HashSet<ProductReviewEntity>();
 }
