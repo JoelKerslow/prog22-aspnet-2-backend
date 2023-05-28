@@ -27,10 +27,7 @@ public class AddressEntity
     
     [Required]
     public string Icon { get; set; } = null!;
-
-    [Required]
-    public string Icon { get; set; } = null!;
-    
+       
     [Required]
     public int CustomerProfileId { get; set; }
 
