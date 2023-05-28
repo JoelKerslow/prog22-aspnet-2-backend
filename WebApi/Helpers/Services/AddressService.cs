@@ -29,13 +29,19 @@ public class AddressService
 
     public async Task<bool> UpdateCustomerAddressAsync(AddressUpdateSchema schema)
     {
-        var adress = await _addressRepo.GetAsync(x => x.CustomerProfileId == schema.CustomerProfileId);
-        if (adress != null)
+        var address = await _addressRepo.GetAsync(x => x.CustomerProfileId == schema.CustomerProfileId);
+        if (address != null)
         {
             try
             {
-                AddressEntity updatedAddress = schema;
-                await _addressRepo.UpdateAsync(updatedAddress);
+                address.Title = schema.Title;
+                address.Addressline1 = schema.Addressline1;
+                address.Addressline2 = schema.Addressline2;
+                address.PostalCode = schema.PostalCode;
+                address.Country = schema.Country;
+                address.City = schema.City;
+                address.Icon = schema.Icon;
+                await _addressRepo.UpdateAsync(address);
                 return true;
             }
             catch (Exception) {}
