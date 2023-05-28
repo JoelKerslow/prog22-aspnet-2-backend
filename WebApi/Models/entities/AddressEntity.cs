@@ -33,6 +33,7 @@ public class AddressEntity
     [Required]
     public CustomerProfileEntity CustomerProfile { get; set; } = null!;
 
+
     public static implicit operator AddressDto(AddressEntity entity)
     {
         return new AddressDto
