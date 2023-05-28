@@ -12,20 +12,17 @@ namespace WebApi.Helpers.Services
 		private readonly ProductRepository _productRepo;
 		private readonly CustomerProfileService _customerProfileService;
 		private readonly PromoCodeService _promoCodeService;
-		private readonly JwtService _jwtService;
 
-		public CartService(CartRepository cartRepo,ProductRepository productRepo,CustomerProfileService customerProfileService,JwtService jwtService, PromoCodeService promoCodeService)
+		public CartService(CartRepository cartRepo,ProductRepository productRepo,CustomerProfileService customerProfileService,PromoCodeService promoCodeService)
 		{
 			_cartRepo = cartRepo;
 			_productRepo = productRepo;
 			_customerProfileService = customerProfileService;
 			_promoCodeService = promoCodeService;
-			_jwtService = jwtService;
 		}
 
 		public async Task<CartDto> GetUserCartAsync(string token)
 		{
-			//var userId = _jwtService.GetIdFromToken(token);
 			var customerProfile = await _customerProfileService.GetCustomerProfile(token);
 			var cart = await _cartRepo.GetAsync(x => x.CustomerProfile.UserId == customerProfile.UserId);
 
@@ -54,13 +51,13 @@ namespace WebApi.Helpers.Services
 				cartItem = schema;
 				cartItem.CartId = cart.Id;
 				cartItem.ProductId = product.Id;
-				cartItem.Quantity = 1;
+				cartItem.Quantity = schema.Quantity;
 
 				await _cartRepo.AddCartItemAsync(cartItem);
 			}
 			else
 			{
-				cartItem.Quantity += 1;
+				cartItem.Quantity += schema.Quantity;
 
 				await _cartRepo.UpdateCartItem(cartItem);
 			}
@@ -68,7 +65,7 @@ namespace WebApi.Helpers.Services
 			return cartItem;
 		}
 
-		public async Task UpdateCartItemAsync(string token, UpdateCartItemSchema schema)
+		public async Task UpdateCartItemAsync(string token, CartItemSchema schema)
 		{
 			var cart = await GetUserCartAsync(token);
 
