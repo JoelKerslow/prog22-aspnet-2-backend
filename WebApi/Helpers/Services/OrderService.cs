@@ -11,15 +11,17 @@ public class OrderService
 	private readonly OrderReviewRepository _orderReviewRepository;
 	private readonly OrderRepository _orderRepository;
 	private readonly OrderDetailsRepository _orderDetailsRepository;
+	private readonly CartService _cartService;
 
-	public OrderService(OrderReviewRepository orderReviewRepository, OrderRepository orderRepository, OrderDetailsRepository orderDetailsRepository)
-	{
-		_orderReviewRepository = orderReviewRepository;
-		_orderRepository = orderRepository;
-		_orderDetailsRepository = orderDetailsRepository;
-	}
+    public OrderService(OrderReviewRepository orderReviewRepository, OrderRepository orderRepository, OrderDetailsRepository orderDetailsRepository, CartService cartService)
+    {
+        _orderReviewRepository = orderReviewRepository;
+        _orderRepository = orderRepository;
+        _orderDetailsRepository = orderDetailsRepository;
+        _cartService = cartService;
+    }
 
-	public async Task<IEnumerable<OrderDto>> GetOrdersAsync(int customerId)
+    public async Task<IEnumerable<OrderDto>> GetOrdersAsync(int customerId)
 	{
 		var orderEntities =  await _orderRepository.GetAllAsync(x => x.CustomerId== customerId);
 		var orders = new List<OrderDto>();
@@ -38,7 +40,7 @@ public class OrderService
 		return orders;
 	}
 
-	public async Task<bool> CreateOrderAsync(OrderSchema schema)
+	public async Task<bool> CreateOrderAsync(OrderSchema schema, string token)
 	{
 		OrderEntity orderEntity = schema;
 		orderEntity.OrderDate = DateTime.Now;
@@ -53,6 +55,8 @@ public class OrderService
 				orderDetails.OrderId = orderEntity.Id;
 				await _orderDetailsRepository.AddAsync(orderDetails);
 			}
+
+			await _cartService.DeleteCartItemsAsync(token);
 
 			return true;
 		}
