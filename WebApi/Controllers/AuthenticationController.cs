@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 using WebApi.Helpers.Filters;
 using WebApi.Helpers.Services;
 using WebApi.Models.Schemas;
@@ -51,4 +52,22 @@ public class AuthenticationController : ControllerBase
 	{
 		return Ok();
 	}
+
+    [HttpPost("AuthorizeWithGoogle")]
+    public async Task<IActionResult> AuthorizeWithGoogle()
+    {
+		string googleToken;
+
+        using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
+        {
+            googleToken = await reader.ReadToEndAsync();
+        }
+
+        var token = await _authService.LoginWithGoogleAsync(googleToken.Split('"')[1]);
+
+		if(string.IsNullOrEmpty(token))
+			return Problem();
+
+        return Ok(token);
+    }
 }

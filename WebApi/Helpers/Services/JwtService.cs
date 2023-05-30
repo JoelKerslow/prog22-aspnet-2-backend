@@ -53,4 +53,48 @@ public class JwtService
 
 		return null!;
 	}
+
+    public string GetEmailFromToken(string token)
+    {
+        try
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtToken = tokenHandler.ReadJwtToken(token);
+
+            var idClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "email");
+
+            if (idClaim != null)
+            {
+                return idClaim.Value;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+        return null!;
+    }
+
+    public string GetNameFromToken(string token)
+    {
+        try
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtToken = tokenHandler.ReadJwtToken(token);
+
+            var idClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == "name");
+
+            if (idClaim != null)
+            {
+                return idClaim.Value;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+        return null!;
+    }
 }
