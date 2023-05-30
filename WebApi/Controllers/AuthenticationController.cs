@@ -63,7 +63,7 @@ public class AuthenticationController : ControllerBase
             googleToken = await reader.ReadToEndAsync();
         }
 
-        var token = await _authService.LoginWithGoogleAsync(googleToken.Split('"')[1]);
+        var token = await _authService.LoginWithGoogleAsync(googleToken);
 
 		if(string.IsNullOrEmpty(token))
 			return Problem();
