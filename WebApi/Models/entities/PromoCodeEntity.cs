@@ -38,6 +38,8 @@ namespace WebApi.Models.Entities
 
         public static implicit operator PromoCodeDto(PromoCodeEntity entity)
         {
+            if (entity == null) return null!;
+
             return new PromoCodeDto
             {
                 Id = entity.Id,
