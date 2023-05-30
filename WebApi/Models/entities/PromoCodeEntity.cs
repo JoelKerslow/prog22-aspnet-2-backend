@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
+using WebApi.Models.Dtos;
 
 namespace WebApi.Models.Entities
 {
@@ -33,5 +34,22 @@ namespace WebApi.Models.Entities
 
 
         public ICollection<CustomerProfileEntity> CustomerProfiles { get; set; } = new HashSet<CustomerProfileEntity>();
+
+
+        public static implicit operator PromoCodeDto(PromoCodeEntity entity)
+        {
+            return new PromoCodeDto
+            {
+                Id = entity.Id,
+                Description = entity.Description,
+                Brand = entity.Brand,
+                Discount = entity.Discount,
+                StartDate = entity.StartDate,
+                EndDate = entity.EndDate,
+                Code = entity.Code,
+                IsReusable = entity.IsReusable,
+                IsValid = entity.IsValid,
+            };
+        }
     }
 }
