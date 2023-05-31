@@ -40,6 +40,15 @@ public class OrderService
 		return orders;
 	}
 
+	public async Task<OrderDto> GetOrderByIdAsync(int orderId)
+	{
+		var orderEntity = await _orderRepository.GetAsync(x => x.Id == orderId);
+		OrderDto order = orderEntity;
+
+		return order;
+	}
+
+
 	public async Task<bool> CreateOrderAsync(OrderSchema schema, string token)
 	{
 		OrderEntity orderEntity = schema;
