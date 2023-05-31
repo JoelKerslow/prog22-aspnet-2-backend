@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Helpers.Filters;
 using WebApi.Helpers.Services;
+using WebApi.Interfaces;
 using WebApi.Models.Dtos;
 using WebApi.Models.Schemas;
 
@@ -13,9 +14,9 @@ namespace WebApi.Controllers
     [UseApiKey]
     public class AddressesController : ControllerBase
     {
-        private readonly AddressService _addressService;
+        private readonly IAddressService _addressService;
 
-        public AddressesController(AddressService service)
+        public AddressesController(IAddressService service)
         {
             _addressService = service;
         }
