@@ -25,11 +25,11 @@ public class AddressService
                 addressList.Add(dto);
         }
         return addressList;
-    } 
+    }
 
     public async Task<bool> UpdateCustomerAddressAsync(AddressUpdateSchema schema)
     {
-        var address = await _addressRepo.GetAsync(x => x.CustomerProfileId == schema.CustomerProfileId);
+        var address = await _addressRepo.GetAsync(x => x.Id == schema.Id);
         if (address != null)
         {
             try
@@ -44,7 +44,7 @@ public class AddressService
                 await _addressRepo.UpdateAsync(address);
                 return true;
             }
-            catch (Exception) {}
+            catch (Exception) { }
         }
 
         return false;
