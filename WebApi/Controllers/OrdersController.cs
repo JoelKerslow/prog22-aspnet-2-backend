@@ -32,6 +32,20 @@ namespace WebApi.Controllers
 			return NotFound();
 		}
 
+		[HttpGet("Id")]
+		[Authorize]
+		public async Task<IActionResult> GetOrderById(int orderId)
+		{
+			var order = await _orderService.GetOrderByIdAsync(orderId);
+
+			if (order != null)
+			{
+				return Ok(order);
+			}
+
+			return NotFound();
+		}
+
 		[HttpPost]
 		[Authorize]
 		public async Task<IActionResult> CreateOrder(OrderSchema schema)
