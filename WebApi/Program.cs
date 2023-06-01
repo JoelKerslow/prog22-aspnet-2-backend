@@ -8,6 +8,7 @@ using WebApi.Contexts;
 using WebApi.Helpers.Filters;
 using WebApi.Helpers.Repositories;
 using WebApi.Helpers.Services;
+using WebApi.Models.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +31,7 @@ builder.Services.AddScoped<CategoryRepository>();
 builder.Services.AddScoped<DepartmentRepository>();
 builder.Services.AddScoped<TagRepository>();
 builder.Services.AddScoped<CustomerProfileRepository>();
-builder.Services.AddScoped<ShowcaseRepository>();
+builder.Services.AddScoped<IShowcaseRepository, ShowcaseRepository>();
 builder.Services.AddScoped<OrderReviewRepository>();
 builder.Services.AddScoped<ProductReviewRepository>();
 builder.Services.AddScoped<CartRepository>();
@@ -45,7 +46,7 @@ builder.Services.AddScoped<WishlistRepository>();
 #region Services
 
 builder.Services.AddScoped<ProductService>();
-builder.Services.AddScoped<ShowcaseService>();
+builder.Services.AddScoped<IShowcaseService, ShowcaseService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<CustomerProfileService>();

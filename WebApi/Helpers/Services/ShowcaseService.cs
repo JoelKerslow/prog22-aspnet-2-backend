@@ -1,13 +1,14 @@
 ﻿using WebApi.Helpers.Repositories;
 using WebApi.Models.Dtos;
+using WebApi.Models.Interfaces;
 
 namespace WebApi.Helpers.Services;
 
-public class ShowcaseService
+public class ShowcaseService : IShowcaseService
 {
-    private readonly ShowcaseRepository _showcaseRepo;
+    private readonly IShowcaseRepository _showcaseRepo;
 
-    public ShowcaseService(ShowcaseRepository repository)
+    public ShowcaseService(IShowcaseRepository repository)
     {
         _showcaseRepo = repository;
     }
