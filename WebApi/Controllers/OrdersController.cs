@@ -36,9 +36,12 @@ namespace WebApi.Controllers
 		[Authorize]
 		public async Task<IActionResult> CreateOrder(OrderSchema schema)
 		{
-			if (ModelState.IsValid)
+            string bearerToken = HttpContext.Request.Headers["Authorization"]!;
+            var token = bearerToken.Split(" ");
+
+            if (ModelState.IsValid)
 			{
-				if(await _orderService.CreateOrderAsync(schema))
+				if(await _orderService.CreateOrderAsync(schema, token[1]))
 				{
 					return Created("", null);
 				}

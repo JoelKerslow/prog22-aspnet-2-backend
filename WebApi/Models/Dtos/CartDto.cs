@@ -6,7 +6,7 @@ namespace WebApi.Models.Dtos
 	{
 		public int Id { get; set; }
 		public int CustomerId { get; set; }
-		public PromoCodeEntity? PromoCode { get; set; }
+		public PromoCodeDto? PromoCode { get; set; }
 		public int? PromoCodeId { get; set; }
 		public bool IsActive { get; set; }
 		public decimal TotalAmountWithoutDiscount { get; set; }
@@ -21,7 +21,7 @@ namespace WebApi.Models.Dtos
 				Id = entity.Id,
 				CustomerId = entity.CustomerProfileId,
 				PromoCodeId = entity.PromoCodeId,
-				PromoCode = entity.PromoCode,
+				PromoCode = entity.PromoCode!,
 				IsActive = entity.IsActive,
 				TotalAmountWithoutDiscount = entity.TotalAmountWithoutDiscount,
 				DiscountAmount = entity.DiscountAmount,
@@ -37,7 +37,7 @@ namespace WebApi.Models.Dtos
 				Id = dto.Id,
 				CustomerProfileId = dto.CustomerId,
 				PromoCodeId = dto.PromoCodeId,
-				PromoCode = dto.PromoCode,
+				PromoCode = dto.PromoCode!,
 				IsActive = dto.IsActive,
 				CartItems = dto.CartItems.Select(x => (CartItemEntity)x).ToList()
 			};

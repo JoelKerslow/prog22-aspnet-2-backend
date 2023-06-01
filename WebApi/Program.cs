@@ -38,6 +38,7 @@ builder.Services.AddScoped<CartRepository>();
 builder.Services.AddScoped<PromoCodeRepository>();
 builder.Services.AddScoped<OrderRepository>();
 builder.Services.AddScoped<OrderDetailsRepository>();
+builder.Services.AddScoped<AddressRepository>();
 builder.Services.AddScoped<WishlistRepository>();
 
 
@@ -54,7 +55,9 @@ builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<ProductReviewService>();
 builder.Services.AddScoped<CartService>();
 builder.Services.AddScoped<PromoCodeService>();
+builder.Services.AddScoped<AddressService>();
 builder.Services.AddScoped<WishlistService>();
+
 
 #endregion
 

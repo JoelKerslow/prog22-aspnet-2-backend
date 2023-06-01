@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Helpers.Filters;
 using WebApi.Helpers.Services;
+using WebApi.Interfaces;
 using WebApi.Models.Schemas;
 
 namespace WebApi.Controllers;
@@ -11,9 +12,9 @@ namespace WebApi.Controllers;
 [UseApiKey]
 public class AuthenticationController : ControllerBase
 {
-	private readonly AuthService _authService;
+	private readonly IAuthService _authService;
 
-	public AuthenticationController(AuthService authService)
+	public AuthenticationController(IAuthService authService)
 	{
 		_authService = authService;
 	}
