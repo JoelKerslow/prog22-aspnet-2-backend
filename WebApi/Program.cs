@@ -8,7 +8,7 @@ using WebApi.Contexts;
 using WebApi.Helpers.Filters;
 using WebApi.Helpers.Repositories;
 using WebApi.Helpers.Services;
-using WebApi.Models.Interfaces;
+using WebApi.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +26,7 @@ builder.Services.AddDbContext<IdentityContext>(options =>
 
 #region Repositories
 
-builder.Services.AddScoped<ProductRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<CategoryRepository>();
 builder.Services.AddScoped<DepartmentRepository>();
 builder.Services.AddScoped<TagRepository>();
@@ -39,24 +39,24 @@ builder.Services.AddScoped<PromoCodeRepository>();
 builder.Services.AddScoped<OrderRepository>();
 builder.Services.AddScoped<OrderDetailsRepository>();
 builder.Services.AddScoped<AddressRepository>();
-builder.Services.AddScoped<WishlistRepository>();
+builder.Services.AddScoped<IWishlistRepository, WishlistRepository>();
 
 
 #endregion
 
 #region Services
 
-builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IShowcaseService, ShowcaseService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<CustomerProfileService>();
+builder.Services.AddScoped<ICustomerProfileService, CustomerProfileService>();
 builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<ProductReviewService>();
 builder.Services.AddScoped<CartService>();
 builder.Services.AddScoped<PromoCodeService>();
 builder.Services.AddScoped<AddressService>();
-builder.Services.AddScoped<WishlistService>();
+builder.Services.AddScoped<IWishlistService, WishlistService>();
 
 
 #endregion

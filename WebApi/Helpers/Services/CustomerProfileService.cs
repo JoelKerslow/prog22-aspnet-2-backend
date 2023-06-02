@@ -1,16 +1,18 @@
 ﻿using WebApi.Helpers.Repositories;
+using WebApi.Helpers.Repositories.Interfaces;
+using WebApi.Interfaces;
 using WebApi.Models.Dtos;
 using WebApi.Models.Entities;
 using WebApi.Models.Schemas;
 
 namespace WebApi.Helpers.Services;
 
-public class CustomerProfileService
+public class CustomerProfileService : ICustomerProfileService
 {
-	private readonly CustomerProfileRepository _customerProfileRepository;
+	private readonly ICustomerProfileRepository _customerProfileRepository;
 	private readonly JwtService _jwtService;
 
-	public CustomerProfileService(CustomerProfileRepository customerProfileRepository, JwtService jwtService)
+	public CustomerProfileService(ICustomerProfileRepository customerProfileRepository, JwtService jwtService)
 	{
 		_customerProfileRepository = customerProfileRepository;
 		_jwtService = jwtService;
@@ -27,7 +29,7 @@ public class CustomerProfileService
 		var userId = _jwtService.GetIdFromToken(token);
 		var customerProfileEntity = await _customerProfileRepository.GetAsync(x => x.UserId == userId);
 
-		if(customerProfileEntity == null)
+		if (customerProfileEntity == null)
 		{
 			return null!;
 		}

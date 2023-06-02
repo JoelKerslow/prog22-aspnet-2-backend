@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using WebApi.Contexts;
+using WebApi.Interfaces;
 
 namespace WebApi.Helpers.Repositories.BaseRepositories
 {
-	public abstract class Repository<TEntity> where TEntity : class
+    public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 	{
 		readonly DataContext _context;
 

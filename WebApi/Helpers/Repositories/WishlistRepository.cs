@@ -2,12 +2,13 @@
 using System.Linq.Expressions;
 using WebApi.Contexts;
 using WebApi.Helpers.Repositories.BaseRepositories;
+using WebApi.Interfaces;
 using WebApi.Models.entities;
 using WebApi.Models.Entities;
 
 namespace WebApi.Helpers.Repositories
 {
-	public class WishlistRepository : Repository<WishlistEntity>
+    public class WishlistRepository : Repository<WishlistEntity>, IWishlistRepository
 	{
 		private readonly DataContext _context;
 
@@ -18,7 +19,7 @@ namespace WebApi.Helpers.Repositories
 		}
 
 		public override async Task<WishlistEntity> GetAsync(Expression<Func<WishlistEntity, bool>> predicate)
-		{ 
+		{
 			var entity = await _context.Wishlists
 				.Include(x => x.WishlistItems)
 				.ThenInclude(x => x.Product)
@@ -26,7 +27,7 @@ namespace WebApi.Helpers.Repositories
 				.FirstOrDefaultAsync(predicate);
 
 			if (entity != null)
-				return  entity;
+				return entity;
 
 			return null!;
 		}

@@ -2,12 +2,13 @@
 using System.Linq.Expressions;
 using WebApi.Contexts;
 using WebApi.Helpers.Repositories.BaseRepositories;
+using WebApi.Interfaces;
 using WebApi.Models;
 using WebApi.Models.Entities;
 
 namespace WebApi.Helpers.Repositories;
 
-public class ProductRepository : Repository<ProductEntity>
+public class ProductRepository : Repository<ProductEntity>, IProductRepository
 {
 	private readonly DataContext _context;
 

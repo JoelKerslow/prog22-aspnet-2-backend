@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApi.Helpers.Filters;
-using WebApi.Helpers.Services;
+using WebApi.Interfaces;
 using WebApi.Models.Schemas;
 
 namespace WebApi.Controllers
@@ -10,9 +10,9 @@ namespace WebApi.Controllers
 	[UseApiKey]
 	public class ProductsController : ControllerBase
 	{
-		private readonly ProductService _productService;
+		private readonly IProductService _productService;
 
-		public ProductsController(ProductService productService)
+		public ProductsController(IProductService productService)
 		{
 			_productService = productService;
 		}

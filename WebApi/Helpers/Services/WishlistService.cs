@@ -1,17 +1,17 @@
-﻿using WebApi.Helpers.Repositories;
+﻿using WebApi.Interfaces;
 using WebApi.Models.Dtos;
 using WebApi.Models.Entities;
 using WebApi.Models.Schemas;
 
 namespace WebApi.Helpers.Services
 {
-	public class WishlistService
+    public class WishlistService : IWishlistService
 	{
-		private readonly WishlistRepository _wishlistRepo;
-		private readonly ProductRepository _productRepo;
-		private readonly CustomerProfileService _customerProfileService;
+		private readonly IWishlistRepository _wishlistRepo;
+		private readonly IProductRepository _productRepo;
+		private readonly ICustomerProfileService _customerProfileService;
 
-		public WishlistService(WishlistRepository wishlistRepo, ProductRepository productRepo, CustomerProfileService customerProfileService)
+		public WishlistService(IWishlistRepository wishlistRepo, IProductRepository productRepo, ICustomerProfileService customerProfileService)
 		{
 			_wishlistRepo = wishlistRepo;
 			_productRepo = productRepo;
@@ -44,7 +44,7 @@ namespace WebApi.Helpers.Services
 			{
 				wishlistItem = schema;
 				wishlistItem.WishlistId = wishlist.Id;
-				wishlistItem.ProductId = product.Id;
+				wishlistItem.Product = product;
 
 				await _wishlistRepo.AddWishlistItemAsync(wishlistItem);
 			}

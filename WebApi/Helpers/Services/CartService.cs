@@ -1,4 +1,5 @@
 ﻿using WebApi.Helpers.Repositories;
+using WebApi.Interfaces;
 using WebApi.Models.Dtos;
 using WebApi.Models.Entities;
 using WebApi.Models.Schemas;
@@ -9,11 +10,11 @@ namespace WebApi.Helpers.Services
 	public class CartService
 	{
 		private readonly CartRepository _cartRepo;
-		private readonly ProductRepository _productRepo;
-		private readonly CustomerProfileService _customerProfileService;
+		private readonly IProductRepository _productRepo;
+		private readonly ICustomerProfileService _customerProfileService;
 		private readonly PromoCodeService _promoCodeService;
 
-		public CartService(CartRepository cartRepo,ProductRepository productRepo,CustomerProfileService customerProfileService,PromoCodeService promoCodeService)
+		public CartService(CartRepository cartRepo,IProductRepository productRepo,ICustomerProfileService customerProfileService,PromoCodeService promoCodeService)
 		{
 			_cartRepo = cartRepo;
 			_productRepo = productRepo;

@@ -1,7 +1,6 @@
 ﻿using Moq;
-using WebApi.Helpers.Repositories;
 using WebApi.Helpers.Services;
-using WebApi.Models.Interfaces;
+using WebApi.Interfaces;
 using WebApi.Test.Fixtures;
 
 namespace WebApi.Test.UnitTests.Services;

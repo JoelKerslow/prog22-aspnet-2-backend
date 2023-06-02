@@ -1,4 +1,5 @@
 ﻿using WebApi.Helpers.Repositories;
+using WebApi.Interfaces;
 using WebApi.Models;
 using WebApi.Models.Dtos;
 using WebApi.Models.Entities;
@@ -6,11 +7,11 @@ using WebApi.Models.Schemas;
 
 namespace WebApi.Helpers.Services;
 
-public class ProductService
+public class ProductService : IProductService
 {
-	private readonly ProductRepository _productRepo;
+	private readonly IProductRepository _productRepo;
 
-	public ProductService(ProductRepository productRepo)
+	public ProductService(IProductRepository productRepo)
 	{
 		_productRepo = productRepo;
 	}
@@ -112,11 +113,11 @@ public class ProductService
 			throw new ArgumentException($"Invalid value: {size} or {color}");
 		}
 
-		return ConvertEntities(await _productRepo.GetAllAsync((x => x.Size == sizeEnum && x.Color == colorEnum && x.Price >= minPrice 
+		return ConvertEntities(await _productRepo.GetAllAsync((x => x.Size == sizeEnum && x.Color == colorEnum && x.Price >= minPrice
 		&& x.Price <= maxPrice && x.TagId == tagId && x.DepartmentId == departmentId)));
 	}
 
-	
+
 	private IEnumerable<ProductDto> ConvertEntities(IEnumerable<ProductEntity> entities)
 	{
 		var products = new List<ProductDto>();

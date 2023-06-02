@@ -9,10 +9,10 @@ public class AuthService : IAuthService
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
-    private readonly CustomerProfileService _customerProfileService;
+    private readonly ICustomerProfileService _customerProfileService;
     private readonly JwtService _jwtService;
 
-    public AuthService(UserManager<IdentityUser> userManager, CustomerProfileService customerProfileService, SignInManager<IdentityUser> signInManager, JwtService jwtService)
+    public AuthService(UserManager<IdentityUser> userManager, ICustomerProfileService customerProfileService, SignInManager<IdentityUser> signInManager, JwtService jwtService)
     {
         _userManager = userManager;
         _customerProfileService = customerProfileService;
