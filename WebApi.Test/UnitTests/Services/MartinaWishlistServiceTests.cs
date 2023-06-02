@@ -42,7 +42,7 @@ namespace WebApi.Test.UnitTests.Services
 				Id = 1,
 				CustomerProfileId = customerProfile.Id
 			};
-
+	
 			_customerProfileService
 				.Setup(service => service.GetCustomerProfile(token))
 				.ReturnsAsync(customerProfile);
@@ -59,7 +59,7 @@ namespace WebApi.Test.UnitTests.Services
 
 
 		[Fact]
-		public async Task AddWishlistItemAsync_When_Wishlist_Is_Not_Found()
+		public async Task AddWishlistItemAsync_When_WishlistItem_Is_Not_Found()
 		{
 			var token = "valid_token";
 			var product = new ProductDto
@@ -115,5 +115,48 @@ namespace WebApi.Test.UnitTests.Services
 
 			_wishlistRepo.Verify();
 		}
+
+		[Fact]
+		public async Task DeleteWishlistItemAsync_Should_Delete_Wishlist_Item()
+		{
+			var token = "valid_token";
+			var product = new ProductDto
+			{
+				Id = 1
+			};
+
+			var customerProfile = new CustomerProfileDto
+			{
+				Id = 1,
+				UserId = "1"
+			};
+
+			var wishlist = new WishlistEntity
+			{
+				Id = 1,
+				CustomerProfileId = customerProfile.Id,
+			};
+
+			_customerProfileService
+			.Setup(service => service.GetCustomerProfile(token))
+			.ReturnsAsync(customerProfile);
+
+			_wishlistRepo
+				.Setup(repo => repo.GetAsync(It.IsAny<Expression<Func<WishlistEntity, bool>>>()))
+				.ReturnsAsync(wishlist);
+
+			_productRepo
+				.Setup(repo => repo.GetAsync(It.IsAny<Expression<Func<ProductEntity, bool>>>()))
+				.ReturnsAsync(product);
+
+			_wishlistRepo
+				.Setup(repo => repo.DeleteWIshlistItem(wishlist.Id, product.Id))
+				.Verifiable();
+
+			await _wishlistService.DeleteWishlistItemAsync(token, product.Id);
+
+			_wishlistRepo.Verify();
+		}
 	}
 }
+
