@@ -10,6 +10,7 @@ namespace WebApi.Helpers.Services;
 public class CustomerProfileService : ICustomerProfileService
 {
 	private readonly ICustomerProfileRepository _customerProfileRepository;
+	private readonly IJwtService _ijwtService;
 	private readonly JwtService _jwtService;
 
 	public CustomerProfileService(ICustomerProfileRepository customerProfileRepository, JwtService jwtService)
@@ -18,7 +19,13 @@ public class CustomerProfileService : ICustomerProfileService
 		_jwtService = jwtService;
 	}
 
-	public async Task<CustomerProfileEntity> CreateAsync(CustomerProfileEntity entity, string userId)
+    public CustomerProfileService(ICustomerProfileRepository customerProfileRepository, IJwtService ijwtService)
+    {
+        _customerProfileRepository = customerProfileRepository;
+        _ijwtService = ijwtService;
+    }
+
+    public async Task<CustomerProfileEntity> CreateAsync(CustomerProfileEntity entity, string userId)
 	{
 		entity.UserId = userId;
 		return await _customerProfileRepository.AddAsync(entity);
